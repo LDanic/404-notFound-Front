@@ -32,6 +32,7 @@ const Login: React.FC = () => {
         // window.location.href = '/dashboard';
       } else {
         setError("Usuario o contraseña incorrectos");
+        alert("Usuario o contraseña incorrectos");
       }
     } catch (error) {
       console.error("Error al conectar con el servidor:", error);
@@ -54,29 +55,30 @@ const Login: React.FC = () => {
             <div>
               <img src={userIcon} id="icon" alt="User Icon" />
             </div>
-            <form method="post">
+            <form onSubmit={handleLogin}>
               <input
                 type="text"
-                id="login"
+                id="usuario"
                 className="box-fade second"
-                name="k_correo"
                 placeholder="Usuario"
+                value={usuario}
+                onChange={(e) => setUsuario(e.target.value)}
                 required
               />
               <input
                 type="password"
-                id="password"
+                id="contrasena"
                 className="box-fade third"
-                name="k_contraseña"
                 placeholder="Contraseña"
+                value={contrasena}
+                onChange={(e) => setContrasena(e.target.value)}
                 required
               />
-              <input
-                type="submit"
-                className="box-fade fourth"
-                value="Iniciar sesión"
-              />
+              <button type="submit" className="box-fade fourth">
+                Iniciar sesión
+              </button>
             </form>
+
             <div id="formFooter">
               <a className="footer" href="#">
                 Registrarse
