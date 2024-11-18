@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import './App.css'
+import './Custom.css'
 import Stamp_move from '/stamp-move/Stamp_move.jsx'
-import { addToCart } from './utils/carUtils';
+import { addToCart } from '../utils/carUtils';
 
 const COLORS = [
   { name: 'white', label: 'White' },
@@ -24,7 +24,7 @@ const stamp = {
 
 
 
-function App() {
+function Custom() {
   const [selectedColor, setSelectedColor] = useState('white')
   const [selectedSize, setSelectedSize] = useState('M')
   const [selectedFabric, setSelectedFabric] = useState('Lana')
@@ -101,13 +101,13 @@ function App() {
                   onClick={() => setSelectedModel('R')}
                   className={`model-button ${selectedModel === 'R' ? 'selected' : ''}`}
                 >
-                  <img src="src\assets\R\o-neck-white.png" alt="Crew Neck" />
+                  <img src="src\assets\R\R-neck-white.png" alt="Crew Neck" />
                 </button>
                 <button
                   onClick={() => setSelectedModel('V')}
                   className={`model-button ${selectedModel === 'V' ? 'selected' : ''}`}
                 >
-                  <img src="src\assets\V\v-neck-white.png" title="v-neck"/>
+                  <img src="src\assets\V\V-neck-white.png" title="v-neck"/>
                 </button>
               </div>
             </div>
@@ -169,4 +169,4 @@ function App() {
   )
 }
 
-export default App
+export default Custom
