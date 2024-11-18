@@ -1,4 +1,4 @@
-body {
+/* body {
     font-family: Arial, sans-serif;
     display: flex;
     flex-direction: column;
@@ -144,4 +144,4 @@ input[type=button], input[type=submit], input[type=reset]  {
 input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
     background-color: #7AB4AD;
     cursor: pointer;
-}
+}*/

@@ -1,0 +1,215 @@
+.container {
+  margin: 0 auto;
+}
+
+.main-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.preview-panel {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.preview-panel img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.customization-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.stamp-section {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1rem;
+  align-items: center;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  justify-items: end;
+}
+
+.stamp-info {
+  display: flex;
+  gap: 1rem;
+}
+
+.stamp-preview {
+  width: 100px;
+  height: 100px;
+  background: #f5f5f5;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stamp-preview img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+.stamp-details h1 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.stamp-details p {
+  color: #666;
+  margin: 0.5rem 0;
+}
+
+.stamp-details .price {
+  font-size: 1.125rem;
+  font-weight: bold;
+}
+
+.stamp-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  flex-direction: column;
+  max-width: 230px;
+}
+
+.options-section {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.option-group {
+  margin-bottom: 1.5rem;
+}
+
+.option-group h3 {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.model-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.model-button {
+  padding: 0.5rem;
+  border: 2px solid #e5e5e5;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.model-button.selected {
+  border-color: #3b82f6;
+}
+
+.model-button img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+}
+
+.color-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.color-button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+}
+
+.color-button.selected {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.color-button.white {
+  background: white;
+  border: 2px solid #e5e5e5;
+}
+
+.color-button.black { background: black; }
+.color-button.babyblue { background: #bfdbfe; }
+.color-button.babypink { background: #fbb6ce; }
+.color-button.oilblue { background: #004566; }
+.color-button.babygreen { background: #bbf7d0; }
+.color-button.red { background: #ef4444; }
+
+.size-buttons, .fabric-buttons{
+  display: flex;
+  gap: 0.5rem;
+}
+
+.size-button, .fabric-button{
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  background: #f5f5f5;
+  border: none;
+  cursor: pointer;
+  color: black;
+}
+
+.size-button.selected, .fabric-button.selected{
+  background: #1f2937;
+  color: white;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e5e5;
+  margin-top: 1rem;
+}
+
+.total span {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.btn-change {
+  background: #f87171;
+  color: white;
+}
+
+.btn-cart {
+  background: #3b82f6;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.cart-icon {
+  width: 24px;
+  height: 24px;
+}
