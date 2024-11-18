@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import {
   ReactFlow,
   useNodesState,
@@ -15,7 +15,21 @@ const CustomNode = ({ data }) => {
   );
 };
 
-function Stamp_move({ setPosition }) {
+function Stamp_move({ setPosition, selectedModel, selectedColor }) {
+  const [backgroundImage, setBackgroundImage] = useState('');
+
+  useEffect(() => {
+    // Función para determinar la ruta de la imagen basada en modelo y color
+    const getImagePath = (model, color) => {
+      return `src/assets/${model}/${model}-neck-${color}.png`
+    };
+
+    // Actualizar la imagen de fondo según el modelo y color seleccionados
+    const newBackgroundImage = getImagePath(selectedModel, selectedColor);
+    setBackgroundImage(newBackgroundImage);
+
+  }, [selectedModel, selectedColor]);
+
   const initialNodes = [
     {
       id: '1',
@@ -38,7 +52,6 @@ function Stamp_move({ setPosition }) {
       alert("No puedes colocar la estampa fuera de la camisa :)")
       node.position.x = 125;
       node.position.y = 175;
-      //node.position = { x: 125, y: 175 };
     }
 
     setPosition(node.position);
@@ -58,7 +71,7 @@ function Stamp_move({ setPosition }) {
           onNodeDragStop={limitNodeMovement}
           onNodeDrag={drag}
           nodeTypes={{ custom: CustomNode }} // Registrar el tipo de nodo personalizado
-          style={{backgroundImage: 'url(https://www.pnguniverse.com/wp-content/uploads/2021/06/Camiseta-blancaa-77141530.png)', backgroundSize: '490px 490px', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}
+          style={{backgroundImage: `url(${backgroundImage})`, backgroundSize: '490px 490px', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}
           panOnScroll={false} // Desactivar desplazamiento al hacer scroll
           zoomOnScroll={false} // Desactivar zoom al hacer scroll
           zoomOnPinch={false} // Desactivar zoom al hacer pinch en pantallas táctiles

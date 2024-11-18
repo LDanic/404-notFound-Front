@@ -148,10 +148,10 @@
 }
 
 .color-button.black { background: black; }
-.color-button.lightBlue { background: #bfdbfe; }
-.color-button.pink { background: #fbb6ce; }
-.color-button.blue { background: #3b82f6; }
-.color-button.green { background: #bbf7d0; }
+.color-button.babyblue { background: #bfdbfe; }
+.color-button.babypink { background: #fbb6ce; }
+.color-button.oilblue { background: #004566; }
+.color-button.babygreen { background: #bbf7d0; }
 .color-button.red { background: #ef4444; }
 
 .size-buttons, .fabric-buttons{

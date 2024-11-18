@@ -6,10 +6,10 @@ import { addToCart } from './utils/carUtils';
 const COLORS = [
   { name: 'white', label: 'White' },
   { name: 'black', label: 'Black' },
-  { name: 'lightBlue', label: 'Light Blue' },
-  { name: 'pink', label: 'Pink' },
-  { name: 'blue', label: 'Blue' },
-  { name: 'green', label: 'Green' },
+  { name: 'babyblue', label: 'Light Blue' },
+  { name: 'babypink', label: 'Pink' },
+  { name: 'oilblue', label: 'Blue' },
+  { name: 'babygreen', label: 'Green' },
   { name: 'red', label: 'Red' },
 ]
 
@@ -59,7 +59,7 @@ function App() {
       <div className="main-content">
         {/* Left Column - T-shirt Preview */}
         <div className="preview-panel">
-          <Stamp_move setPosition={setPosition}/>
+          <Stamp_move setPosition={setPosition} selectedModel={selectedModel} selectedColor={selectedColor}/>
         </div>
 
         {/* Right Column - Customization Options */}
@@ -101,13 +101,13 @@ function App() {
                   onClick={() => setSelectedModel('R')}
                   className={`model-button ${selectedModel === 'R' ? 'selected' : ''}`}
                 >
-                  <img src="src\assets\crew-neck.png" alt="Crew Neck" />
+                  <img src="src\assets\R\o-neck-white.png" alt="Crew Neck" />
                 </button>
                 <button
                   onClick={() => setSelectedModel('V')}
                   className={`model-button ${selectedModel === 'V' ? 'selected' : ''}`}
                 >
-                  <img src="src\assets\v-neck.png" alt="V Neck" />
+                  <img src="src\assets\V\v-neck-white.png" title="v-neck"/>
                 </button>
               </div>
             </div>
