@@ -1,0 +1,60 @@
+.espacio70{
+    height: 70px;
+}
+.imgCarrusel{
+    height: 50vh;
+    align-content: center;
+    text-align: center;
+}
+.imgCarrusel > img{
+    width: inherit;
+    height: inherit;
+    object-fit: cover;
+}
+
+.contCards{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 80px;
+    justify-content: center;
+    padding: 20px;
+    padding-top: 10px;
+}
+.carta{
+    position: relative;
+    text-align: center;
+    height: 300px;
+    width: 200px;
+    
+}
+.carta > img{
+    height: inherit;
+    width: inherit;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+.infoCard{
+    position: absolute;
+    height: 70px;
+    width: inherit;
+    bottom: 3px;
+}
+.textCard{
+    bottom: 30px;
+    color: #000000da;
+    
+    margin: 5px;
+    width: inherit;
+}
+.btnCard{
+    width: 100px;
+    padding: 3px 6px;
+    margin: 0;
+    border: 0;
+    border-radius: 10px;
+    size: 8px;
+    background-color: rgba(0, 0, 0, 0.501);
+    bottom: 0;
+    
+}

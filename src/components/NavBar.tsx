@@ -1,20 +1,24 @@
-import React from 'react'
-import "../style/Navbar.css"
-
-type Props = {}
+import "../style/Navbar.css";
+import logo from "../assets/Logo/Logo/404 not found logoN.png";
+import { Link } from "react-router-dom";
+type Props = {};
 
 function NavBar({}: Props) {
   return (
-    <div className='navbar '>
-      <div className='espacio'></div>
-      <div className="logo"><i className="bi bi-emoji-dizzy"></i></div>
-      <div className='icons'>
-        <i className="bi bi-bag-heart"></i>
-        <i className="bi bi-person-circle"></i>
-        <i className="bi bi-cart3"></i>
+    <div className="navb ">
+      <Link to="/catalogo" className="catalogo">Catalogo</Link>
+      <Link to="/pagPrincipal" className="logo">
+        <img src={logo} alt="" />
+      </Link>
+      <div className="icons">
+        <i className="bi bi-bag-heart-fill"></i>
+        <Link to="/login">
+          <i className="bi bi-person-fill"></i>
+        </Link>
+        <i className="bi bi-cart-fill"></i>
       </div>
     </div>
-  )
+  );
 }
 
-export default NavBar
+export default NavBar;
