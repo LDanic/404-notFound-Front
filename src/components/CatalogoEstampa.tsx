@@ -1,5 +1,5 @@
 //import React from "react";
-import "../style/CatalogoEstampampa.css";
+import style from "../style/CatalogoEstampampa.module.css";
 import { useState } from "react";
 type Props = {};
 
@@ -111,22 +111,22 @@ function contCatalogo(value: string) {
   }
 
   return (
-    <div className="catalogo-container">
+    <div className={style.catalogoContainer}>
       {camisasFiltradas.map((camisa) => (
-        <div className="carta" key={camisa.id}>
-          <div className="contimagen">
+        <div className={style.carta} key={camisa.id}>
+          <div className={style.contimagen}>
             <img
               src={camisa.imagen}
               alt={camisa.nombre}
-              className="imagen"
+              className={style.imagen}
             />
-            <div className="contBtn">
-              <button className="btn-camisa">Configurar camisa</button>
+            <div className={style.contBtn}>
+              <button className={style.btnCamisa}>Configurar camisa</button>
             </div>
           </div>
-          <h2 className="nombre">{camisa.nombre}</h2>
-          <p className="precio">{camisa.precio}</p>
-          <i className="bi bi-suit-heart-fill"></i>
+          <h2 className={style.nombre}>{camisa.nombre}</h2>
+          <p className={style.precio}>{camisa.precio}</p>
+          <i className={`${style.bi} ${style['bi-suit-heart-fill']}`}></i>
         </div>
       ))}
     </div>

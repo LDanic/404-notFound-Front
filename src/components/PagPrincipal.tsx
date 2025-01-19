@@ -1,4 +1,3 @@
-import Carousel from "react-bootstrap/Carousel";
 import style from "../style/PagPrincipal.module.css";
 import Slider1 from "../assets/Slider/slider1.png";
 import Slider2 from "../assets/Slider/slider2.png";
@@ -23,14 +22,6 @@ function PagPrincipal() {
   return (
     <div>
       <div className={style.espacio70}></div>
-      <button type="button" className={`${style.btn} ${style['btn-danger']}`}>Base class</button>
-      <div className={`${style.contCarrusel} ${style.carousel} ${style.slide}`} >
-        {imgSlider.map((imagen) => (
-          <div className="imgCarrusel">
-            <img src={imagen} alt="imagen" />
-          </div>
-        ))}
-      </div>
 
       <div className={style.contCards}>
         {contCard.map((cont) => (
