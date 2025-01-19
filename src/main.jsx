@@ -7,11 +7,11 @@ import Login from "./components/Login";
 import NavBar from "./components/NavBar";
 import CatalogoEstampa from "./components/CatalogoEstampa";
 import PagPrincipal from "./components/PagPrincipal";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
+    
     <Router>
       <NavBar />
       <Routes>

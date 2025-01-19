@@ -1,5 +1,5 @@
 import Carousel from "react-bootstrap/Carousel";
-import "../style/PagPrincipal.css";
+import style from "../style/PagPrincipal.module.css";
 import Slider1 from "../assets/Slider/slider1.png";
 import Slider2 from "../assets/Slider/slider2.png";
 import { Link } from "react-router-dom";
@@ -22,23 +22,24 @@ function PagPrincipal() {
 
   return (
     <div>
-      <div className="espacio70"></div>
-      <Carousel className="contCarrusel">
+      <div className={style.espacio70}></div>
+      <button type="button" className={`${style.btn} ${style['btn-danger']}`}>Base class</button>
+      <div className={`${style.contCarrusel} ${style.carousel} ${style.slide}`} >
         {imgSlider.map((imagen) => (
-          <Carousel.Item className="imgCarrusel">
+          <div className="imgCarrusel">
             <img src={imagen} alt="imagen" />
-          </Carousel.Item>
+          </div>
         ))}
-      </Carousel>
+      </div>
 
-      <div className="contCards">
+      <div className={style.contCards}>
         {contCard.map((cont) => (
-          <div className="carta">
+          <div className={style.carta}>
             <img src={cont.img} alt="" />
-            <div className="infoCard">
-              <h4 className="textCard">{cont.text}</h4>
+            <div className={style.infoCard}>
+              <h4 className={style.textCard}>{cont.text}</h4>
               <Link to="/catalogo">
-                <button className="btnCard">Ver más</button>
+                <button className={style.btnCard}>Ver más</button>
               </Link>
             </div>
           </div>
