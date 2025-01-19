@@ -18,6 +18,7 @@ createRoot(document.getElementById("root")).render(
         <Route path="/pagPrincipal" element={<PagPrincipal />} />
         <Route path="/catalogo" element={<CatalogoEstampa />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/custom" element={<Custom />} />
       </Routes>
     </Router>
   </StrictMode>

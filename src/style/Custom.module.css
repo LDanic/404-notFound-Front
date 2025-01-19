@@ -2,33 +2,33 @@
   margin: 0 auto;
 }
 
-.main-content {
+.mainContent {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
-  margin-top: 2rem;
+  margin-top: 5rem;
 }
 
-.preview-panel {
+.previewPanel {
   background: white;
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.preview-panel img {
+.previewPanel img {
   width: 100%;
   height: auto;
   object-fit: contain;
 }
 
-.customization-panel {
+.customizationPanel {
   display: flex;
   flex-direction: column;
   gap: 2rem;
 }
 
-.stamp-section {
+.stampSection {
   display: grid;
   grid-template-columns: auto 1fr auto;
   gap: 1rem;
@@ -40,12 +40,12 @@
   justify-items: end;
 }
 
-.stamp-info {
+.stampInfo {
   display: flex;
   gap: 1rem;
 }
 
-.stamp-preview {
+.stampPreview {
   width: 100px;
   height: 100px;
   background: #f5f5f5;
@@ -55,29 +55,29 @@
   justify-content: center;
 }
 
-.stamp-preview img {
+.stampPreview img {
   width: 80px;
   height: 80px;
   object-fit: contain;
 }
 
-.stamp-details h1 {
+.stampDetails h1 {
   font-size: 1.25rem;
   font-weight: bold;
   margin: 0;
 }
 
-.stamp-details p {
+.stampDetails p {
   color: #666;
   margin: 0.5rem 0;
 }
 
-.stamp-details .price {
+.stampDetails .price {
   font-size: 1.125rem;
   font-weight: bold;
 }
 
-.stamp-actions {
+.stampActions {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
@@ -85,50 +85,50 @@
   max-width: 230px;
 }
 
-.options-section {
+.optionsSection {
   background: white;
   padding: 1.5rem;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.option-group {
+.optionGroup {
   margin-bottom: 1.5rem;
 }
 
-.option-group h3 {
+.optionGroup h3 {
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
 
-.model-buttons {
+.modelButtons {
   display: flex;
   gap: 1rem;
 }
 
-.model-button {
+.modelButton {
   padding: 0.5rem;
   border: 2px solid #e5e5e5;
   border-radius: 8px;
   cursor: pointer;
 }
 
-.model-button.selected {
+.modelButton.selected {
   border-color: #3b82f6;
 }
 
-.model-button img {
+.modelButton img {
   width: 120px;
   height: 120px;
   object-fit: contain;
 }
 
-.color-buttons {
+.colorButtons {
   display: flex;
   gap: 0.5rem;
 }
 
-.color-button {
+.colorButton {
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -136,29 +136,29 @@
   cursor: pointer;
 }
 
-.color-button.selected {
+.colorButton.selected {
   outline: 2px solid #3b82f6;
   outline-offset: 2px;
 }
 
-.color-button.white {
+.colorButton.white {
   background: white;
   border: 2px solid #e5e5e5;
 }
 
-.color-button.black { background: black; }
-.color-button.babyblue { background: #bfdbfe; }
-.color-button.babypink { background: #fbb6ce; }
-.color-button.oilblue { background: #004566; }
-.color-button.babygreen { background: #bbf7d0; }
-.color-button.red { background: #ef4444; }
+.colorButton.black { background: black; }
+.colorButton.babyblue { background: #bfdbfe; }
+.colorButton.babypink { background: #fbb6ce; }
+.colorButton.oilblue { background: #004566; }
+.colorButton.babygreen { background: #bbf7d0; }
+.colorButton.red { background: #ef4444; }
 
-.size-buttons, .fabric-buttons{
+.sizeButtons, .fabricButtons{
   display: flex;
   gap: 0.5rem;
 }
 
-.size-button, .fabric-button{
+.sizeButton, .fabricButton{
   padding: 0.5rem 1rem;
   border-radius: 8px;
   background: #f5f5f5;
@@ -167,7 +167,7 @@
   color: black;
 }
 
-.size-button.selected, .fabric-button.selected{
+.sizeButton.selected, .fabricButton.selected{
   background: #1f2937;
   color: white;
 }
@@ -195,12 +195,12 @@
   white-space: nowrap;
 }
 
-.btn-change {
+.btnChange {
   background: #f87171;
   color: white;
 }
 
-.btn-cart {
+.btnCart {
   background: #3b82f6;
   color: white;
   display: flex;
@@ -209,7 +209,7 @@
   gap: 0.5rem;
 }
 
-.cart-icon {
+.cartIcon {
   width: 24px;
   height: 24px;
 }

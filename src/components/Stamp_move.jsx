@@ -4,7 +4,7 @@ import {
   useNodesState,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import '/src/style/Stamp_move.css';
+import style from "../style/Stamp_move.module.css";
 
 // Componente del nodo personalizado
 const CustomNode = ({ data }) => {
@@ -62,32 +62,33 @@ function Stamp_move({ setPosition, selectedModel, selectedColor }) {
   }, [setPosition]);
 
   return (
-    <div className="container-preview">
-      {/* Lienzo de ReactFlow */}
-      <div className="flow-canvas">
-        <ReactFlow
-          nodes={nodes}
-          onNodesChange={onNodesChange}
-          onNodeDragStop={limitNodeMovement}
-          onNodeDrag={drag}
-          nodeTypes={{ custom: CustomNode }} // Registrar el tipo de nodo personalizado
-          style={{backgroundImage: `url(${backgroundImage})`, backgroundSize: '490px 490px', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}
-          panOnScroll={false} // Desactivar desplazamiento al hacer scroll
-          zoomOnScroll={false} // Desactivar zoom al hacer scroll
-          zoomOnPinch={false} // Desactivar zoom al hacer pinch en pantallas táctiles
-          panOnDrag={false} // Desactivar desplazamiento al arrastrar
-          draggable = {false}
-        >
-        </ReactFlow>
-      </div>
-
-      {/* Ver posición cambiando en pantalla
-      <div className="panel">
-        <h3>Panel de Compra</h3>
-        <p>Posición actual de la estampa:</p>
-        <p>X: {nodes[0].position.x}, Y: {nodes[0].position.y}</p>
-      </div>*/}
+  <div className={style.containerPreview}>
+    {/* Lienzo de ReactFlow */}
+    <div className={style.flowCanvas}>
+      <ReactFlow
+        nodes={nodes}
+        onNodesChange={onNodesChange}
+        onNodeDragStop={limitNodeMovement}
+        onNodeDrag={drag}
+        nodeTypes={{ custom: CustomNode }} // Registrar el tipo de nodo personalizado
+        style={{backgroundImage: `url(${backgroundImage})`, backgroundSize: '490px 490px', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}
+        panOnScroll={false} // Desactivar desplazamiento al hacer scroll
+        zoomOnScroll={false} // Desactivar zoom al hacer scroll
+        zoomOnPinch={false} // Desactivar zoom al hacer pinch en pantallas táctiles
+        panOnDrag={false} // Desactivar desplazamiento al arrastrar
+        draggable={false}
+      >
+      </ReactFlow>
     </div>
+
+    {/* Ver posición cambiando en pantalla
+    <div className={style.panel}>
+      <h3>Panel de Compra</h3>
+      <p>Posición actual de la estampa:</p>
+      <p>X: {nodes[0].position.x}, Y: {nodes[0].position.y}</p>
+    </div>*/}
+  </div>
+
   );
 }
 
