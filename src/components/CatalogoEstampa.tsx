@@ -1,4 +1,5 @@
 //import React from "react";
+import { Link } from "react-router-dom";
 import "../style/CatalogoEstampampa.css";
 import { useState } from "react";
 type Props = {};
@@ -121,7 +122,9 @@ function contCatalogo(value: string) {
               className="imagen"
             />
             <div className="contBtn">
-              <button className="btn-camisa">Configurar camisa</button>
+              <Link to="/custom" state={camisa}>
+                <button className="btn-camisa">Configurar camisa</button>
+              </Link>
             </div>
           </div>
           <h2 className="nombre">{camisa.nombre}</h2>

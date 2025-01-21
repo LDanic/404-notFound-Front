@@ -1,11 +1,16 @@
-export function addToCart({ selectedColor, selectedModel, selectedFabric, selectedSize, stamp, total, position}) {
-    console.log("Carrito de Compras:");
-    console.log("Color:", selectedColor);
-    console.log("Modelo:", selectedModel);
-    console.log("Tela:", selectedFabric);
-    console.log("Talla:", selectedSize);
-    console.log("Estampa:", stamp);
-    console.log("Total:", total);
-    console.log("position:", position);
-  }
-  
+// Inicializar el carrito desde localStorage
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+export function getCart() {
+  return cart; // Retorna el estado actual del carrito
+}
+
+export function addToCart(newItem) {
+  cart = [...cart, newItem]; // Agregar el nuevo artículo al carrito
+  localStorage.setItem('cart', JSON.stringify(cart)); // Guardar el carrito actualizado en localStorage
+}
+
+export function clearCart() {
+  cart = []; // Vaciar el carrito
+  localStorage.setItem('cart', JSON.stringify(cart)); // Actualizar el localStorage
+}

@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import style from "../style/Custom.module.css";
 import Stamp_move from '/src/components/Stamp_move.jsx'
 import NavBar from "/src/components/NavBar.tsx";
-import { addToCart } from '../utils/carUtils';
+import { addToCart, getCart } from '../utils/carUtils';
+import { useLocation } from "react-router-dom";
 
 const COLORS = [
   { name: 'white', label: 'White' },
@@ -16,13 +17,6 @@ const COLORS = [
 
 const FABRICS = ['Lana', 'Poliester']
 const SIZES = ['XS', 'S', 'M', 'L', 'XL']
-const stamp = {
-  img_principal: "https://i.pinimg.com/originals/68/8b/d2/688bd2e2fba6756a496640c10465a28e.png",
-  name: 'Estampa Harry Potter', 
-  artist: 'Pepito Perez',
-  price: 10000
-}
-
 
 
 function Custom() {
@@ -32,19 +26,25 @@ function Custom() {
   const [selectedModel, setSelectedModel] = useState('R')
   const [shirtPrice, setShirtPrice] = useState(40000);
   const [position, setPosition] = useState({ x: 125, y: 175 });
+  
+  const location = useLocation();
+  const stamp = location.state;
+  const stampPrice = parseFloat(stamp.precio.replace("$", "").replace(".", ""));
 
 
   const handleAddToCart = () => {
-    const total = shirtPrice + stamp.price
-    addToCart({
+    const newItem = {
       selectedColor,
       selectedModel,
       selectedFabric,
       selectedSize,
       stamp,
-      total,
+      total: shirtPrice + stampPrice,
       position,
-    });
+    };
+
+    addToCart(newItem);
+    console.log("Item añadido al carrito: ", getCart());
   };
 
   useEffect(() => {
@@ -61,7 +61,7 @@ function Custom() {
     <div className={style.mainContent}>
       {/* Left Column - T-shirt Preview */}
       <div className={style.previewPanel}>
-        <Stamp_move setPosition={setPosition} selectedModel={selectedModel} selectedColor={selectedColor} />
+        <Stamp_move setPosition={setPosition} selectedModel={selectedModel} selectedColor={selectedColor} selectedImage={stamp.imagen}/>
       </div>
 
       {/* Right Column - Customization Options */}
@@ -71,14 +71,14 @@ function Custom() {
           <div className={style.stampInfo}>
             <div className={style.stampPreview}>
               <img
-                src={stamp.img_principal}
+                src={stamp.imagen}
                 alt="404 Stamp"
               />
             </div>
             <div className={style.stampDetails}>
-              <h1>{stamp.name}</h1>
-              <p>Artista: {stamp.artist}</p>
-              <p className={style.price}>${stamp.price}</p>
+              <h1>{stamp.nombre}</h1>
+              <p>Artista: {stamp.artista}</p>
+              <p className={style.price}>${stampPrice}</p>
             </div>
           </div>
 
@@ -160,7 +160,7 @@ function Custom() {
 
           <div className={style.total}>
             <span>Total:</span>
-            <span>${shirtPrice + stamp.price}</span>
+            <span>${shirtPrice + stampPrice}</span>
           </div>
         </div>
       </div>

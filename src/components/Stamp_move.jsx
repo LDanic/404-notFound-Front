@@ -15,7 +15,7 @@ const CustomNode = ({ data }) => {
   );
 };
 
-function Stamp_move({ setPosition, selectedModel, selectedColor }) {
+function Stamp_move({ setPosition, selectedModel, selectedColor, selectedImage }) {
   const [backgroundImage, setBackgroundImage] = useState('');
 
   useEffect(() => {
@@ -34,7 +34,7 @@ function Stamp_move({ setPosition, selectedModel, selectedColor }) {
     {
       id: '1',
       type: 'custom', // Usar el tipo de nodo personalizado
-      data: { label: <img src="https://i.pinimg.com/originals/68/8b/d2/688bd2e2fba6756a496640c10465a28e.png" alt="Estampa" style={{ width: '50px', height: '50px' }} /> },
+      data: { label: <img src={selectedImage} alt="Estampa" style={{ width: '50px', height: '50px' }} /> },
       position: { x: 125, y: 175 },
       draggable: true,
       selectable: false,

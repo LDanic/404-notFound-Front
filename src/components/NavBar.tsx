@@ -15,7 +15,9 @@ function NavBar({}: Props) {
         <Link to="/login">
           <i className="bi bi-person-fill"></i>
         </Link>
-        <i className="bi bi-cart-fill"></i>
+        <Link to="/cart">
+          <i className="bi bi-cart-fill"></i>
+        </Link>
       </div>
     </div>
   );
