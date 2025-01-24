@@ -9,6 +9,12 @@
   position: relative;
 }
 
+.flowCanvasCart {
+  width: 120px;  /* Ancho del lienzo */
+  height: 120px; /* Alto del lienzo */
+  position: relative;
+}
+
 .panel {
   width: 30%;
   border-left: 2px solid #ccc;

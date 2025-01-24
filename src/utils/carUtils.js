@@ -1,16 +1,38 @@
-// Inicializar el carrito desde localStorage
-let cart = JSON.parse(localStorage.getItem('cart')) || [];
+// Cart utilities
+export const cartUtils = {
+  getCart() {
+    return JSON.parse(localStorage.getItem('cart')) || [];
+  },
 
-export function getCart() {
-  return cart; // Retorna el estado actual del carrito
-}
+  addToCart(product) {
+    const cart = this.getCart();
+    cart.push(product);
+    localStorage.setItem('cart', JSON.stringify(cart));
+  },
 
-export function addToCart(newItem) {
-  cart = [...cart, newItem]; // Agregar el nuevo artículo al carrito
-  localStorage.setItem('cart', JSON.stringify(cart)); // Guardar el carrito actualizado en localStorage
-}
+  removeFromCart(index) {
+    const cart = this.getCart();
+    cart.splice(index, 1);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    return cart;
+  },
 
-export function clearCart() {
-  cart = []; // Vaciar el carrito
-  localStorage.setItem('cart', JSON.stringify(cart)); // Actualizar el localStorage
-}
+  updateQuantity(index, quantity) {
+    const cart = this.getCart();
+    cart[index].quantity = quantity;
+    localStorage.setItem('cart', JSON.stringify(cart));
+    return cart;
+  },
+  
+  updateItem(index, item) {
+    const cart = this.getCart();
+    cart[index] = { ...cart[index], ...item };
+    localStorage.setItem('cart', JSON.stringify(cart));
+    return cart;
+  },
+
+  cleanText(text) {
+    console.log("Texto limpio: ", text);
+    return text ? text.replace(/^"(.+)"$/, '$1') : '';
+  }
+};

@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import style from "../style/Custom.module.css";
 import Stamp_move from '/src/components/Stamp_move.jsx'
+import {useNavigate } from "react-router-dom";
 import NavBar from "/src/components/NavBar.tsx";
-import { addToCart, getCart } from '../utils/carUtils';
+import { cartUtils } from '../utils/carUtils';
 import { useLocation } from "react-router-dom";
+import * as htmlToImage from "html-to-image";
 
 const COLORS = [
   { name: 'white', label: 'White' },
@@ -20,6 +22,7 @@ const SIZES = ['XS', 'S', 'M', 'L', 'XL']
 
 
 function Custom() {
+  const navigate = useNavigate();
   const [selectedColor, setSelectedColor] = useState('white')
   const [selectedSize, setSelectedSize] = useState('M')
   const [selectedFabric, setSelectedFabric] = useState('Lana')
@@ -31,20 +34,32 @@ function Custom() {
   const stamp = location.state;
   const stampPrice = parseFloat(stamp.precio.replace("$", "").replace(".", ""));
 
+  const previewRef = useRef();
 
   const handleAddToCart = () => {
-    const newItem = {
-      selectedColor,
-      selectedModel,
-      selectedFabric,
-      selectedSize,
-      stamp,
-      total: shirtPrice + stampPrice,
-      position,
-    };
+    console.log(previewRef.current);
+    htmlToImage.toPng(previewRef.current, { useCORS: true }).then((dataUrl) => {
+      console.log("Imagen generada: ", dataUrl);
+      const newItem = {
+        selectedColor,
+        selectedModel,
+        selectedFabric,
+        selectedSize,
+        stamp,
+        total: shirtPrice + stampPrice,
+        position,
+        quantity: 1,
+        previewImage: dataUrl,
+      };
 
-    addToCart(newItem);
-    console.log("Item añadido al carrito: ", getCart());
+      cartUtils.addToCart(newItem);
+      console.log("Item añadido al carrito: ", cartUtils.getCart());
+
+    });
+  };
+
+  const handleChangeStamp = () => {
+    navigate('/catalogo');
   };
 
   useEffect(() => {
@@ -60,7 +75,7 @@ function Custom() {
     <NavBar />
     <div className={style.mainContent}>
       {/* Left Column - T-shirt Preview */}
-      <div className={style.previewPanel}>
+      <div className={style.previewPanel} ref={previewRef}>
         <Stamp_move setPosition={setPosition} selectedModel={selectedModel} selectedColor={selectedColor} selectedImage={stamp.imagen}/>
       </div>
 
@@ -83,8 +98,8 @@ function Custom() {
           </div>
 
           <div className={style.stampActions}>
-            <button className={`${style.btn} ${style.btnChange}`}>
-              CAMBIAR ESTAMPA
+            <button className={`${style.btn} ${style.btnChange}`} onClick={handleChangeStamp}>
+              CAMBIAR ESTAMPA     
             </button>
             <button className={`${style.btn} ${style.btnCart}`} onClick={handleAddToCart}>
               AÑADIR AL CARRITO

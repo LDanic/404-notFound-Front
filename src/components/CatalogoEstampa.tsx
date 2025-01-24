@@ -54,7 +54,7 @@ function contCatalogo(value: string) {
     {
       id: 1,
       imagen:
-        "https://w7.pngwing.com/pngs/292/708/png-transparent-dead-tongue-emoji-emoticon-emoji-icon-thumbnail.png",
+        "https://raw.githubusercontent.com/LDanic/404-not-found-assets/refs/heads/main/404NotFound.png",
       nombre: "400 NOT FOUND",
       precio: "$10.000",
       idTema: "Halloween",
@@ -62,7 +62,7 @@ function contCatalogo(value: string) {
     {
       id: 2,
       imagen:
-        "https://w7.pngwing.com/pngs/949/210/png-transparent-wall-e-and-eva-thumbnail.png",
+        "https://raw.githubusercontent.com/LDanic/404-not-found-assets/refs/heads/main/wall-eandEve.png",
       nombre: "Walle & Eva",
       precio: "$12.000",
       idTema: "Disney",
@@ -70,7 +70,7 @@ function contCatalogo(value: string) {
     {
       id: 3,
       imagen:
-        "https://w7.pngwing.com/pngs/72/539/png-transparent-anger-disgust-emotion-pixar-sadness-intensamente-child-orange-film-thumbnail.png",
+        "https://raw.githubusercontent.com/LDanic/404-not-found-assets/7d1aa6c10820ae9bf3adfd9e4c55e3e789e412ca/furia.png",
       nombre: "Furia",
       precio: "$12.000",
       idTema: "Disney",
@@ -78,7 +78,7 @@ function contCatalogo(value: string) {
     {
       id: 4,
       imagen:
-        "https://w7.pngwing.com/pngs/292/708/png-transparent-dead-tongue-emoji-emoticon-emoji-icon-thumbnail.png",
+        "https://raw.githubusercontent.com/LDanic/404-not-found-assets/refs/heads/main/404NotFound.png",
       nombre: "400 NOT FOUND",
       precio: "$10.000",
       idTema: "Halloween",
@@ -86,7 +86,7 @@ function contCatalogo(value: string) {
     {
       id: 5,
       imagen:
-        "https://w7.pngwing.com/pngs/949/210/png-transparent-wall-e-and-eva-thumbnail.png",
+        "https://raw.githubusercontent.com/LDanic/404-not-found-assets/refs/heads/main/wall-eandEve.png",
       nombre: "Walle & Eva",
       precio: "$12.000",
       idTema: "Navidad",
@@ -94,7 +94,7 @@ function contCatalogo(value: string) {
     {
       id: 6,
       imagen:
-        "https://w7.pngwing.com/pngs/72/539/png-transparent-anger-disgust-emotion-pixar-sadness-intensamente-child-orange-film-thumbnail.png",
+        "https://raw.githubusercontent.com/LDanic/404-not-found-assets/7d1aa6c10820ae9bf3adfd9e4c55e3e789e412ca/furia.png",
       nombre: "Intensamiente furia",
       precio: "$12.000", idTema: "Navidad"
     },
