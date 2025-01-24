@@ -39,7 +39,7 @@ function OrderSuccess() {
                   <p>Talla: {item.selectedSize || 'M'}</p>
                   <p>Tela: {item.selectedFabric || 'Lana'}</p>
                   <p>Cantidad: {item.quantity}</p>
-                  <p className={style.itemPrice}>${(item.total * item.quantity).toFixed(2)}</p>
+                  <p className={style.itemPrice}>${((item.shirtPrice+item.stampPrice) * item.quantity).toFixed(0)}</p>
                 </div>
               </div>
             ))}
@@ -47,7 +47,7 @@ function OrderSuccess() {
   
           <div className={style.totalAmount}>
             <span>Total:</span>
-            <span>${order.total.toFixed(2)}</span>
+            <span>${order.total.toFixed(0)}</span>
           </div>
         </div>
   

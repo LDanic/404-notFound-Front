@@ -6,7 +6,7 @@ import style from "../style/Checkout.module.css";
 function Checkout() {
   const navigate = useNavigate();
   const cart = cartUtils.getCart();
-  const total = cart.reduce((sum, item) => sum + (item.total * item.quantity), 0);
+  const total = cart.reduce((sum, item) => sum + ((item.shirtPrice+item.stampPrice) * item.quantity), 0);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -59,14 +59,14 @@ function Checkout() {
                   <p>Talla: {item.selectedSize || 'M'}</p>
                   <p>Tela: {item.selectedFabric || 'Lana'}</p>
                   <p>Cantidad: {item.quantity}</p>
-                  <p className={style.itemPrice}>${(item.total * item.quantity).toFixed(2)}</p>
+                  <p className={style.itemPrice}>${((item.shirtPrice+item.stampPrice) * item.quantity).toFixed(0)}</p>
                 </div>
               </div>
             ))}
           </div>
           <div className={style.orderTotal}>
             <span>Total:</span>
-            <span>${total.toFixed(2)}</span>
+            <span>${total.toFixed(0)}</span>
           </div>
         </div>
   

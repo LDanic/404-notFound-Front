@@ -35,6 +35,12 @@ function Cart() {
   const handleFabricChange = (index, fabric) => {
     const updatedCart = [...cartItems];
     updatedCart[index].selectedFabric = fabric;
+    if (fabric === 'Poliester') {
+      updatedCart[index].shirtPrice = 30000;
+    } else {
+      updatedCart[index].shirtPrice = 40000;
+    }
+    
     setCartItems(updatedCart);
     cartUtils.updateItem(index, updatedCart[index]);
   };
@@ -47,7 +53,7 @@ function Cart() {
     navigate('/catalogo');
   };
 
-  const total = cartItems.reduce((sum, item) => sum + (item.total * item.quantity), 0);
+  const total = cartItems.reduce((sum, item) => sum + ((item.shirtPrice+item.stampPrice) * item.quantity), 0);
 
   return (
     <div className={style.cartPage}>
@@ -79,7 +85,7 @@ function Cart() {
                     <div className={style.itemHeader}>
                       <div>
                         <h3 className={style.itemName}>{item.name}</h3>
-                        <p className={style.itemPrice}>${item.total}</p>
+                        <p className={style.itemPrice}>${item.shirtPrice+item.stampPrice}</p>
                       </div>
                       <button 
                         className={style.removeButton}
@@ -145,7 +151,7 @@ function Cart() {
                     <div className={style.itemSubtotal}>
                       <span>Subtotal:</span>
                       <span className={style.subtotalAmount}>
-                        ${(item.total * item.quantity).toFixed(2)}
+                        ${((item.shirtPrice+item.stampPrice) * item.quantity).toFixed(0)}
                       </span>
                     </div>
                   </div>
@@ -158,7 +164,7 @@ function Cart() {
               <div className={style.summaryDetails}>
                 <div className={style.summaryRow}>
                   <span>Subtotal</span>
-                  <span>${total.toFixed(2)}</span>
+                  <span>${total.toFixed(0)}</span>
                 </div>
                 <div className={style.summaryRow}>
                   <span>Envío</span>
@@ -166,7 +172,7 @@ function Cart() {
                 </div>
                 <div className={style.summaryTotal}>
                   <span>Total</span>
-                  <span>${total.toFixed(2)}</span>
+                  <span>${total.toFixed(0)}</span>
                 </div>
               </div>
               
