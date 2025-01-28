@@ -9,6 +9,9 @@ body {
     margin: 0;
 }
 
+.div70px{
+ height: 70px;
+}
 
 .contenido {
     display: flex;

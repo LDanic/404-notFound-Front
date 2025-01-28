@@ -1,21 +1,33 @@
-import "../style/Navbar.css";
+import style from "../style/Navbar.module.css";
 import logo from "../assets/Logo/Logo/404 not found logoN.png";
 import { Link } from "react-router-dom";
 type Props = {};
 
 function NavBar({}: Props) {
   return (
-    <div className="navb ">
-      <Link to="/catalogo" className="catalogo">Catalogo</Link>
-      <Link to="/pagPrincipal" className="logo">
+    <div className={style.navb}>
+      <div className={style.opciones}>
+        <Link to="/catalogo" className={style.catalogo}>
+          <h3>Catalogo</h3> <p>+1000 estampas</p>
+        </Link>
+        <div className={style.linea}></div>
+        <Link to="/catalogo" className={style.artistas}>
+          <h3>Artistas</h3> <p>+100 artistas</p>
+        </Link>
+      </div>
+
+      <Link to="/pagPrincipal" className={style.logo}>
         <img src={logo} alt="" />
       </Link>
-      <div className="icons">
-        <i className="bi bi-bag-heart-fill"></i>
+
+      <div className={style.icons}>
+        <i className={`${style.bi} ${["bi bi-bag-heart-fill"]}`}></i>
+        <div className={style.linea}></div>
         <Link to="/login">
-          <i className="bi bi-person-fill"></i>
+          <i className={`${style.bi} ${["bi-person-fill"]}`}></i>
         </Link>
-        <i className="bi bi-cart-fill"></i>
+        <div className={style.linea}></div>
+        <i className={`${style.bi} ${["bi-cart-fill"]}`}></i>
       </div>
     </div>
   );

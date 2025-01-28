@@ -1,3 +1,5 @@
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
 .navb {
     position: fixed;
     top: 0;
@@ -22,15 +24,39 @@
     display: flex;
     gap: 20px;
     padding: 0 20px;
+    color: rgb(109, 109, 109);
 }
 
 .navb> .icons>i{
     cursor: pointer;
 }
   
-.catalogo{
+.opciones{
+    display: inline-flex;
+    
+}
+.artistas , .catalogo{
+    text-align: center;
+    color: rgb(96, 96, 96);
+    text-decoration: none;
     width: 140px;
     padding-left: 10px;
-    color: black;
-    text-decoration: none;
+}
+.artistas >p, .catalogo> p{
+    color: rgb(146, 146, 146);
+    font-size: 13px;
+}
+
+.artistas >h3, .catalogo>h3{
+    font-size: 17px;
+    font-weight: normal;
+}
+
+.linea{
+    border-left: 1px solid rgb(120, 120, 120);
+    height: 50px;    
+}
+
+.icons > .linea{
+    height: 40px;
 }

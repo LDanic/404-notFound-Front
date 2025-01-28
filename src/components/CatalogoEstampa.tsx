@@ -1,4 +1,5 @@
 //import React from "react";
+import { Link } from "react-router-dom";
 import style from "../style/CatalogoEstampampa.module.css";
 import { useState } from "react";
 type Props = {};
@@ -26,6 +27,7 @@ function CatalogoEstampa({}: Props) {
   };
   return (
     <div className="container">
+      <div className={style.div70px}></div>
       <div className="filtro-container">
         <p>Categorias: </p>
 
@@ -39,8 +41,9 @@ function CatalogoEstampa({}: Props) {
               {tema.nombre}
             </button>
           ))}
-          <button className="xTema tema" onClick={() => filtroSeleccionado("")}><i className="bi bi-x"></i></button>
-          
+          <button className="xTema tema" onClick={() => filtroSeleccionado("")}>
+            <i className="bi bi-x"></i>
+          </button>
         </div>
       </div>
       {contCatalogo(inputValue)}
@@ -53,7 +56,7 @@ function contCatalogo(value: string) {
     {
       id: 1,
       imagen:
-        "https://w7.pngwing.com/pngs/292/708/png-transparent-dead-tongue-emoji-emoticon-emoji-icon-thumbnail.png",
+        "https://raw.githubusercontent.com/LDanic/404-not-found-assets/refs/heads/main/404NotFound.png",
       nombre: "400 NOT FOUND",
       precio: "$10.000",
       idTema: "Halloween",
@@ -61,7 +64,7 @@ function contCatalogo(value: string) {
     {
       id: 2,
       imagen:
-        "https://w7.pngwing.com/pngs/949/210/png-transparent-wall-e-and-eva-thumbnail.png",
+        "https://raw.githubusercontent.com/LDanic/404-not-found-assets/refs/heads/main/wall-eandEve.png",
       nombre: "Walle & Eva",
       precio: "$12.000",
       idTema: "Disney",
@@ -69,7 +72,7 @@ function contCatalogo(value: string) {
     {
       id: 3,
       imagen:
-        "https://w7.pngwing.com/pngs/72/539/png-transparent-anger-disgust-emotion-pixar-sadness-intensamente-child-orange-film-thumbnail.png",
+        "https://raw.githubusercontent.com/LDanic/404-not-found-assets/7d1aa6c10820ae9bf3adfd9e4c55e3e789e412ca/furia.png",
       nombre: "Furia",
       precio: "$12.000",
       idTema: "Disney",
@@ -77,7 +80,7 @@ function contCatalogo(value: string) {
     {
       id: 4,
       imagen:
-        "https://w7.pngwing.com/pngs/292/708/png-transparent-dead-tongue-emoji-emoticon-emoji-icon-thumbnail.png",
+        "https://raw.githubusercontent.com/LDanic/404-not-found-assets/refs/heads/main/404NotFound.png",
       nombre: "400 NOT FOUND",
       precio: "$10.000",
       idTema: "Halloween",
@@ -85,7 +88,7 @@ function contCatalogo(value: string) {
     {
       id: 5,
       imagen:
-        "https://w7.pngwing.com/pngs/949/210/png-transparent-wall-e-and-eva-thumbnail.png",
+        "https://raw.githubusercontent.com/LDanic/404-not-found-assets/refs/heads/main/wall-eandEve.png",
       nombre: "Walle & Eva",
       precio: "$12.000",
       idTema: "Navidad",
@@ -93,16 +96,17 @@ function contCatalogo(value: string) {
     {
       id: 6,
       imagen:
-        "https://w7.pngwing.com/pngs/72/539/png-transparent-anger-disgust-emotion-pixar-sadness-intensamente-child-orange-film-thumbnail.png",
+        "https://raw.githubusercontent.com/LDanic/404-not-found-assets/7d1aa6c10820ae9bf3adfd9e4c55e3e789e412ca/furia.png",
       nombre: "Intensamiente furia",
-      precio: "$12.000", idTema: "Navidad"
+      precio: "$12.000",
+      idTema: "Navidad",
     },
   ];
 
   let camisasFiltradas = camisas;
 
   if (value !== "") {
-    camisasFiltradas=[]
+    camisasFiltradas = [];
     camisas.forEach((camisa) => {
       if (value === camisa.idTema) {
         camisasFiltradas.push(camisa);
@@ -121,12 +125,14 @@ function contCatalogo(value: string) {
               className={style.imagen}
             />
             <div className={style.contBtn}>
-              <button className={style.btnCamisa}>Configurar camisa</button>
+              <Link to="/custom" state={camisa}>
+                <button className={style.btnCamisa}>Configurar camisa</button>
+              </Link>
             </div>
           </div>
           <h2 className={style.nombre}>{camisa.nombre}</h2>
           <p className={style.precio}>{camisa.precio}</p>
-          <i className={`${style.bi} ${style['bi-suit-heart-fill']}`}></i>
+          <i className={`${style.bi} ${style["bi-suit-heart-fill"]}`}></i>
         </div>
       ))}
     </div>

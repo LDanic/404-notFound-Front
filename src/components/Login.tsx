@@ -43,6 +43,7 @@ const Login: React.FC = () => {
 
   return (
     <div>
+      <div className={style.div70px}></div>
       <section className={style.contenido}>
         <div className={`${style.sesion} ${style.downFade}`}>
           <img className={style.robot} src={robot} alt="Robot" />

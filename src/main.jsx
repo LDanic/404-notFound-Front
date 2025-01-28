@@ -7,6 +7,9 @@ import Login from "./components/Login";
 import NavBar from "./components/NavBar";
 import CatalogoEstampa from "./components/CatalogoEstampa";
 import PagPrincipal from "./components/PagPrincipal";
+import Cart from "./components/Cart";
+import Checkout from "./components/Checkout";
+import OrderSuccess from "./components/OrderSuccess";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 createRoot(document.getElementById("root")).render(
@@ -15,9 +18,13 @@ createRoot(document.getElementById("root")).render(
     <Router>
       <NavBar />
       <Routes>
-        <Route path="/pagPrincipal" element={<PagPrincipal />} />
+        <Route path="/" element={<PagPrincipal />} />
         <Route path="/catalogo" element={<CatalogoEstampa />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/custom" element={<Custom />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/order-success" element={<OrderSuccess />} />
       </Routes>
     </Router>
   </StrictMode>
