@@ -1,7 +1,6 @@
-import style from "../style/loginStyle.module.css";
-import user from "../assets/LoginSignup/User.png";
-import robot from "../assets/LoginSignup/Robot.png";
-import muestra from "../assets/LoginSignup/404Muestra.jpg";
+import "../style/loginStyle.css";
+import logo from "../assets/logo.png";
+import userIcon from "../assets/User.png";
 import React, { useState } from "react";
 import axios from "axios";
 
@@ -43,75 +42,56 @@ const Login: React.FC = () => {
 
   return (
     <div>
-      <section className={style.contenido}>
-        <div className={`${style.sesion} ${style.downFade}`}>
-          <img className={style.robot} src={robot} alt="Robot" />
-          <form action="" method="" onSubmit={handleLogin}>
-            <fieldset className={style.formulario}>
-              <legend className={`${style.leyenda} ${style.boxFade} ${style.first}`}>
-                <img
-                  style={{ width: "40px" }}
-                  className={style.leyenda}
-                  src={user}
-                  alt="User"
-                />
-              </legend>
-              <select
-                className={`${style.sujeto} ${style.boxFade} ${style.first}`}
-                name=""
+      {/* Encabezado */}
+      <header>
+        <img src={logo} alt="Logo de la Tienda" style={{ height: "80px" }} />
+      </header>
+
+      {/* Contenido principal */}
+      <main>
+        <div className="box-login downFade">
+          <div id="formContent">
+            <h2 className="active">Iniciar sesión</h2>
+            <div>
+              <img src={userIcon} id="icon" alt="User Icon" />
+            </div>
+            <form onSubmit={handleLogin}>
+              <input
+                type="text"
+                id="usuario"
+                className="box-fade second"
+                placeholder="Usuario"
+                value={usuario}
+                onChange={(e) => setUsuario(e.target.value)}
                 required
-              >
-                <option>¿Qué eres?</option>
-                <option value="cliente">Cliente</option>
-                <option value="artista">Artista</option>
-                <option value="administrador">Administrador</option>
-              </select>
-              <label
-                className={`${style.sub} ${style.inicial} ${style.boxFade} ${style.first}`}
-                htmlFor="usuario"
-              >
-                Usuario
-                <input
-                  className={`${style.boxFade} ${style.second} ${style.usuario}`}
-                  type="text"
-                  name=""
-                  placeholder="Introduzca su usuario"
-                  value={usuario}
-                  onChange={(e) => setUsuario(e.target.value)}
-                  required
-                />
-              </label>
-              <label
-                className={`${style.sub} ${style.boxFade} ${style.third}`}
-                htmlFor="contra"
-              >
-                Contraseña
-                <input
-                  type="password"
-                  className={`${style.boxFade} ${style.third} ${style.contra}`}
-                  name=""
-                  placeholder="Introduzca su contraseña"
-                  value={contrasena}
-                  onChange={(e) => setContrasena(e.target.value)}
-                  required
-                />
-              </label>
-              <button
-                className={`${style.inicioSesion} ${style.boxFade} ${style.fourth}`}
-                type="submit"
-              >
+              />
+              <input
+                type="password"
+                id="contrasena"
+                className="box-fade third"
+                placeholder="Contraseña"
+                value={contrasena}
+                onChange={(e) => setContrasena(e.target.value)}
+                required
+              />
+              <button type="submit" className="box-fade fourth">
                 Iniciar sesión
               </button>
-              <h3 className={`${style.registro} ${style.boxFade} ${style.fourth}`}>
-                ¿No te has registrado? <a href="">Regístrate</a>
-              </h3>
-            </fieldset>
-          </form>
+            </form>
+
+            <div id="formFooter">
+              <a className="footer" href="#">
+                Registrarse
+              </a>
+            </div>
+          </div>
         </div>
-        <div className={style.modelo}>
-          <img className={`${style.muestra} ${style.boxFade} ${style.fifth}`} src={muestra} alt="Muestra" />
-        </div>
-      </section>
+      </main>
+
+      {/* Pie de página */}
+      <footer>
+        <p>&copy; 2024 Tienda de Camisetas. Todos los derechos reservados.</p>
+      </footer>
     </div>
   );
 };

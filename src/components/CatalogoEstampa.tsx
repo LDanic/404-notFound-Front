@@ -112,14 +112,14 @@ function contCatalogo(value: string) {
   }
 
   return (
-    <div className={style.catalogoContainer}>
+    <div className="catalogo-container">
       {camisasFiltradas.map((camisa) => (
-        <div className={style.carta} key={camisa.id}>
-          <div className={style.contimagen}>
+        <div className="carta" key={camisa.id}>
+          <div className="contimagen">
             <img
               src={camisa.imagen}
               alt={camisa.nombre}
-              className={style.imagen}
+              className="imagen"
             />
             <div className="contBtn">
               <Link to="/custom" state={camisa}>
@@ -127,9 +127,9 @@ function contCatalogo(value: string) {
               </Link>
             </div>
           </div>
-          <h2 className={style.nombre}>{camisa.nombre}</h2>
-          <p className={style.precio}>{camisa.precio}</p>
-          <i className={`${style.bi} ${style['bi-suit-heart-fill']}`}></i>
+          <h2 className="nombre">{camisa.nombre}</h2>
+          <p className="precio">{camisa.precio}</p>
+          <i className="bi bi-suit-heart-fill"></i>
         </div>
       ))}
     </div>
