@@ -2,6 +2,7 @@ import style from "../style/PagPrincipal.module.css";
 import Slider1 from "../assets/Slider/slider1.png";
 import Slider2 from "../assets/Slider/slider2.png";
 import { Link } from "react-router-dom";
+
 function PagPrincipal() {
   const imgSlider = [Slider1, Slider2];
   const contCard = [
