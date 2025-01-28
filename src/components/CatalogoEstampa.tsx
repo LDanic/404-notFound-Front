@@ -125,7 +125,7 @@ function contCatalogo(value: string) {
               className={style.imagen}
             />
             <div className={style.contBtn}>
-              <Link to="/custom" state={camisa}>
+            <Link to="/custom" state={camisa}>
                 <button className={style.btnCamisa}>Configurar camisa</button>
               </Link>
             </div>

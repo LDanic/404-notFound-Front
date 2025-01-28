@@ -1,0 +1,22 @@
+.containerPreview {
+  display: flex;
+  justify-content: center;
+}
+
+.flowCanvas {
+  width: 500px;  /* Ancho del lienzo */
+  height: 600px; /* Alto del lienzo */
+  position: relative;
+}
+
+.flowCanvasCart {
+  width: 120px;  /* Ancho del lienzo */
+  height: 120px; /* Alto del lienzo */
+  position: relative;
+}
+
+.panel {
+  width: 30%;
+  border-left: 2px solid #ccc;
+  padding: 20px;
+}

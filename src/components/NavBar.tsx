@@ -27,7 +27,10 @@ function NavBar({}: Props) {
           <i className={`${style.bi} ${["bi-person-fill"]}`}></i>
         </Link>
         <div className={style.linea}></div>
+        <Link to="/cart">
         <i className={`${style.bi} ${["bi-cart-fill"]}`}></i>
+        </Link>
+        
       </div>
     </div>
   );
