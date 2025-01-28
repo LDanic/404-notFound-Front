@@ -1,3 +1,5 @@
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
 *{
     padding: 0;
     margin: 0;
@@ -8,15 +10,15 @@
   padding-top: 70px;  
 }
 /*fltro */
-.filtro-container{
+.filtroContainer{
   display: flex;
 }
-.filtro-container>p{
+.filtroContainer>p{
   padding: 0px 10px;
   font-size: 1em;
   margin-top: 10px;
 }
-.filtro-container >div{
+.filtroContainer >div{
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
@@ -40,7 +42,7 @@
 }
 
 /*Configuración por estampa*/
-.catalogo-container {
+.catalogoContainer {
   display: flex;
   flex-wrap: wrap;
   gap: 40px;
@@ -93,7 +95,7 @@
     cursor: pointer;
 }
 
-.btn-camisa {
+.btnCamisa {
   position: absolute;
   background-color: #ffffffd0;
   visibility: hidden;
@@ -107,7 +109,7 @@
 }
 
 .carta:hover {
-  .btn-camisa {
+  .btnCamisa {
     visibility: visible;
   }
 }
