@@ -1,6 +1,6 @@
 //import React from "react";
 import { Link } from "react-router-dom";
-import "../style/CatalogoEstampampa.css";
+import style from "../style/CatalogoEstampampa.module.css";
 import { useState } from "react";
 type Props = {};
 
