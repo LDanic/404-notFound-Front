@@ -1,43 +1,57 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import {
-  ReactFlow,
-  useNodesState,
-} from '@xyflow/react';
+import { Background, ReactFlow, useNodesState } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import style from "../style/Stamp_move.module.css";
 
 // Componente del nodo personalizado
 const CustomNode = ({ data }) => {
   return (
-    <div style={{ width: '50px', height: '50px', pointerEvents: 'auto', backgroundColor: 'transparent', border: 'none' }}>
+    <div>
       {data.label}
     </div>
   );
 };
 
-function Stamp_move({ setPosition, selectedModel, selectedColor, selectedImage, customWindow=true }) {
+function Stamp_move({ setPosition, selectedModel, selectedColor, selectedImage}) {
   const [backgroundImage, setBackgroundImage] = useState('');
-  const initialPosition = { x: customWindow? 125: setPosition.x*30/125, y: customWindow ? 175: setPosition.y*22/175 };
+  const [showErrorToast, setShowErrorToast] = useState(false);
 
   useEffect(() => {
-    // Función para determinar la ruta de la imagen basada en modelo y color
     const getImagePath = (model, color) => {
       return `src/assets/${model}/${model}-neck-${color}.png`
     };
 
-    // Actualizar la imagen de fondo según el modelo y color seleccionados
     const newBackgroundImage = getImagePath(selectedModel, selectedColor);
     setBackgroundImage(newBackgroundImage);
-
   }, [selectedModel, selectedColor]);
 
   const initialNodes = [
     {
+      id: '0',
+      type: 'group',
+      data: { label: null },
+      position: { x: 127, y: 130 },
+      style: { 
+        width: 240, 
+        height: 350, 
+        border: 'none',
+        pointerEvents: 'none', 
+        backgroundColor: 'transparent' 
+      },
+      draggable: false,
+    },
+    {
       id: '1',
-      type: 'custom', // Usar el tipo de nodo personalizado
-      data: { label: <img src={selectedImage} alt="Estampa" style={{ width: customWindow ? '100px':'30%', height: customWindow ? '100px':'30%' }} /> },
-      position: { x: initialPosition.x, y: initialPosition.y },
-      draggable: customWindow ? true: false,
+      type: 'custom',
+      data: { 
+        label: <img src={selectedImage} 
+                alt="Estampa" 
+                style={{ width: '100px', height: '100px' }} /> 
+      },
+      position: { x: 0, y: 0 },
+      parentId: '0',
+      extent: 'parent',
+      draggable: true,
       selectable: false,
       resizeable: false
     },
@@ -45,51 +59,37 @@ function Stamp_move({ setPosition, selectedModel, selectedColor, selectedImage, 
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
 
-  const limitNodeMovement = useCallback((event, node) => {
-    var nodeX = node.position.x;
-    var nodeY = node.position.y;
-
-    if (nodeX <= 110 | nodeX >= 325 | nodeY < 100 | nodeY > 470) {
-      alert("No puedes colocar la estampa fuera de la camisa :)")
-      node.position.x = initialPosition.x;
-      node.position.y = initialPosition.y;
-    }
-
-    setPosition(node.position);
-  }, []);
-
   const drag = useCallback((event, node) => {
     setPosition(node.position);
   }, [setPosition]);
 
   return (
-  <div className={style.containerPreview}>
-    {/* Lienzo de ReactFlow */}
-    <div className={customWindow ? style.flowCanvas : style.flowCanvasCart}>
-      <ReactFlow
-        nodes={nodes}
-        onNodesChange={onNodesChange}
-        onNodeDragStop={limitNodeMovement}
-        onNodeDrag={drag}
-        nodeTypes={{ custom: CustomNode }} // Registrar el tipo de nodo personalizado
-        style={{backgroundImage: `url(${backgroundImage})`, backgroundSize: customWindow ? '490px 490px' : '120px 120px', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}
-        panOnScroll={false} // Desactivar desplazamiento al hacer scroll
-        zoomOnScroll={false} // Desactivar zoom al hacer scroll
-        zoomOnPinch={false} // Desactivar zoom al hacer pinch en pantallas táctiles
-        panOnDrag={false} // Desactivar desplazamiento al arrastrar
-        draggable={false}
-      >
-      </ReactFlow>
+    <div className={style.containerPreview}>
+      <div className={style.flowCanvas}>
+        <ReactFlow
+          nodes={nodes}
+          onNodesChange={onNodesChange}
+          onNodeDrag={drag}
+          nodeTypes={{ custom: CustomNode }}
+          style={{
+            backgroundImage: `url(${backgroundImage})`,
+            backgroundSize: '490px 490px',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+          panOnScroll={false}
+          zoomOnScroll={false}
+          zoomOnPinch={false}
+          panOnDrag={false}
+          draggable={false}
+          translateExtent={[
+            [0, 0], // Límite superior izquierdo
+            [500, 600], // Límite inferior derecho
+          ]}
+        >
+        </ReactFlow>
+      </div>
     </div>
-
-    {/* Ver posición cambiando en pantalla
-    <div className={style.panel}>
-      <h3>Panel de Compra</h3>
-      <p>Posición actual de la estampa:</p>
-      <p>X: {nodes[0].position.x}, Y: {nodes[0].position.y}</p>
-    </div>*/}
-  </div>
-
   );
 }
 
