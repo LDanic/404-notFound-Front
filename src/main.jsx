@@ -11,6 +11,8 @@ import Cart from "./components/Cart";
 import SignUp from "./components/SignUp.jsx"
 import Checkout from "./components/Checkout";
 import OrderSuccess from "./components/OrderSuccess";
+import Artista from "./components/artist-dashboard/page.tsx"
+import Esapcio from "./components/EspacioNavbar.tsx"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 createRoot(document.getElementById("root")).render(
@@ -18,6 +20,7 @@ createRoot(document.getElementById("root")).render(
     
     <Router>
       <NavBar />
+      <Esapcio />
       <Routes>
         <Route path="/" element={<PagPrincipal />} />
         <Route path="/catalogo" element={<CatalogoEstampa />} />
@@ -28,6 +31,7 @@ createRoot(document.getElementById("root")).render(
         <Route path="/order-success" element={<OrderSuccess />} />
         <Route path="/pagPrincipal" element={<PagPrincipal/>}/>
         <Route path="/signUp" element={<SignUp/>}/>
+        <Route path="/artista" element={<Artista/>}/>
       </Routes>
     </Router>
   </StrictMode>

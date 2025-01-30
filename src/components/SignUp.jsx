@@ -19,7 +19,6 @@ function SignUp(){
 
   return (
     <div>
-    <div className={styles.div70px}></div>
     <section className={styles.contenido}>
 
 

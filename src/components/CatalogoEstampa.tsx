@@ -27,7 +27,6 @@ function CatalogoEstampa({}: Props) {
   };
   return (
     <div className="container">
-      <div className={style.div70px}></div>
       <div className="filtro-container">
         <p>Categorias: </p>
 

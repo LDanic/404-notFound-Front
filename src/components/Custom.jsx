@@ -73,7 +73,6 @@ function Custom() {
 
   return (
   <div className={style.container}>
-    <NavBar />
     <div className={style.mainContent}>
       {/* Left Column - T-shirt Preview */}
       <div className={style.previewPanel} ref={previewRef}>
