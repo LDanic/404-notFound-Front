@@ -305,7 +305,9 @@ input {
 .requisitos {
   display: none;
   color: rgb(237, 104, 104);
-  font-size: 14px;
+  font-size: 12px;
+  margin-top: 15px;
+  padding-left: 30px;
 }
 
 .requisitos li.cumplido {

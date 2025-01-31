@@ -22,6 +22,8 @@
   border-bottom: 2px solid transparent;
   cursor: pointer;
   transition: all 0.2s;
+  font-family: unset;
+  background-color: white;
 }
 
 .tabsTrigger[data-state="active"] {

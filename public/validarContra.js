@@ -12,7 +12,7 @@ function validarContraseña() {
     return true;
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
     const passwordInput = document.getElementById("contra");
     const requisitosLista = document.getElementById("requisitos");
     const longitudItem = document.getElementById("longitud");

@@ -155,17 +155,20 @@ body {
   color: black;
 }
 
-.registro > a {
+.registro > .a {
   text-decoration: none;
   color: rgb(0, 0, 0);
   font-weight: 500;
 }
 
-.registro > a:hover {
+.registro > .a:hover {
   color: rgb(140, 140, 140);
-  font-size: 14px;
+  font-weight: 500;
   border-bottom: 2px solid rgba(43, 43, 43, 0.918);
 }
+
+
+
 
 .muestra {
   display: block;
@@ -285,3 +288,4 @@ body {
     opacity: 1;
   }
 }
+

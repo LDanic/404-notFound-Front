@@ -4,6 +4,7 @@ import robot from "../assets/LoginSignup/Robot.png";
 import muestra from "../assets/LoginSignup/404Muestra.jpg";
 import React, { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Login: React.FC = () => {
   const [usuario, setUsuario] = useState<string>("");
@@ -103,7 +104,7 @@ const Login: React.FC = () => {
                 Iniciar sesión
               </button>
               <h3 className={`${style.registro} ${style.boxFade} ${style.fourth}`}>
-                ¿No te has registrado? <a href="">Regístrate</a>
+                ¿No te has registrado? <Link to="/signUp" className={style.a}>Regístrate</Link>
               </h3>
             </fieldset>
           </form>

@@ -1,5 +1,4 @@
 import styles from "../style/SignUp.module.css";
-import "../utils/validarContra";
 import React, { useState } from "react";
 
 function SignUp() {
@@ -18,7 +17,7 @@ function SignUp() {
     alert("Registro exitoso");
     return true;
   };
-  
+
   const [password, setPassword] = useState("");
   const [longitudValida, setLongitudValida] = useState(false);
   const [tieneNumero, setTieneNumero] = useState(false);
@@ -148,9 +147,22 @@ function SignUp() {
                   required
                 />
               </label>
-              <ul id="requisitos" className={styles.requisitos}>
-                <li id="longitud">Debe tener 8 o más caracteres</li>
-                <li id="numero">Debe contener al menos un número</li>
+              <ul
+                id="requisitos"
+                className={styles.requisitos}
+                style={{
+                  display: longitudValida && tieneNumero ? "none" : "block",
+                }}
+              >
+                <li
+                  id="longitud"
+                  className={longitudValida ? styles.cumplido : ""}
+                >
+                  Debe tener 8 o más caracteres
+                </li>
+                <li id="numero" className={tieneNumero ? styles.cumplido : ""}>
+                  Debe contener al menos un número
+                </li>
               </ul>
               <label
                 className={`${styles.sub} ${styles.boxFade} ${styles.fourth}`}

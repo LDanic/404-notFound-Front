@@ -29,7 +29,7 @@ export default function UploadDesign({ onUpload }: UploadDesignProps) {
     <form onSubmit={handleUpload} className={styles.form}>
       <div className={styles.inputGroup}>
         <label htmlFor="design-upload" className={styles.label}>
-          Design File
+          Estampa
         </label>
         <input id="design-upload" type="file" onChange={handleFileChange} className={styles.input} />
       </div>
