@@ -1,5 +1,5 @@
 import { DollarSign } from "lucide-react"
-import styles from "./SalesBalance.module.css"
+import styles from "../../style/SalesBalance.module.css"
 
 interface Design {
   id: number

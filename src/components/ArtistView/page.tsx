@@ -5,7 +5,8 @@ import ArtistHeader from "./ArtistHeader"
 import DesignsView from "./DesignsView"
 import UploadDesign from "./UploadDesign"
 import SalesBalance from "./SalesBalance"
-import styles from "./ArtistDashboard.module.css"
+import styles from "../../style/ArtistDashboard.module.css"
+import foto from "../../assets/User.png"
 
 // Mock data for demonstration
 const mockDesigns = [
@@ -39,7 +40,7 @@ export default function ArtistDashboard() {
         <ArtistHeader
           initialName="Jane Doe"
           initialDescription="Artista apasionada por el diseño de camisetas. Creando arte que puedes vestir desde 2015."
-          avatarUrl="/placeholder.svg?height=96&width=96"
+          avatarUrl={foto}
         />
       </div>
 

@@ -1,7 +1,7 @@
 "use client"
 
 import { Shirt, Eye, EyeOff } from "lucide-react"
-import styles from "./DesignsView.module.css"
+import styles from "../../style/DesignsView.module.css"
 
 interface Design {
   id: number

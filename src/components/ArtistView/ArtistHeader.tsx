@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Pencil } from "lucide-react"
-import styles from "./ArtistHeader.module.css"
+import styles from "../../style/ArtistHeader.module.css"
 
 interface ArtistHeaderProps {
   initialName: string

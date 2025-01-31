@@ -300,3 +300,15 @@ input {
     opacity: 1;
   }
 }
+
+
+.requisitos {
+  display: none;
+  color: rgb(237, 104, 104);
+  font-size: 14px;
+}
+
+.requisitos li.cumplido {
+  color: rgb(121, 232, 121);
+  text-decoration: line-through;
+}

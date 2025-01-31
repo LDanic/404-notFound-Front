@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Upload } from "lucide-react"
-import styles from "./UploadDesign.module.css"
+import styles from "../../style/UploadDesign.module.css"
 
 interface UploadDesignProps {
   onUpload: (design: { name: string }) => void
