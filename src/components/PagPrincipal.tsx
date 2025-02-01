@@ -1,10 +1,15 @@
 import style from "../style/PagPrincipal.module.css";
 import Slider1 from "../assets/Slider/slider1.png";
 import Slider2 from "../assets/Slider/slider2.png";
+import Img1 from "../assets/modeloCamisa1.jpg";
+import Img2 from "../assets/modeloCamisa2.jpg";
+import Img3 from "../assets/modeloCamisa3.jpg";
 import { Link } from "react-router-dom";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
 
 function PagPrincipal() {
-  const imgSlider = [Slider1, Slider2];
   const contCard = [
     {
       text: "Disney",
@@ -20,22 +25,53 @@ function PagPrincipal() {
     },
   ];
 
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    arrows: false,
+  };
+
   return (
-    <div>
-      <div className={style.espacio70}></div>
+    <div className={style.homePage}>
+      <Slider {...sliderSettings} className={style.slider}>
+        <div className={style.imgCarrusel}>
+          <img src={Slider1} alt="Slider 1" />
+        </div>
+        <div className={style.imgCarrusel}>
+          <img src={Slider2} alt="Slider 2" />
+        </div>
+      </Slider>
 
       <div className={style.contCards}>
         {contCard.map((cont) => (
           <div className={style.carta}>
             <img src={cont.img} alt="" />
             <div className={style.infoCard}>
-              <h4 className={style.textCard}>{cont.text}</h4>
               <Link to="/catalogo">
-                <button className={style.btnCard}>Ver más</button>
+                <button className={style.btnCard}>{cont.text}</button>
               </Link>
             </div>
           </div>
         ))}
+      </div>
+
+      <div className={style.imagenes}>
+        <div className={style.imgpag}>
+          <p>CUMPLE TUS METAS</p>
+          <img src={Img1} alt="img1" />
+        </div>
+        <div className={style.imgpag}>
+          <p>COMPRA</p>
+          <img src={Img2} alt="im2" />
+        </div>
+        <div className={style.imgpag}>
+          <p>ESTRENA</p>
+          <img src={Img3} alt="im3" />
+        </div>
       </div>
     </div>
   );

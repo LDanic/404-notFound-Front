@@ -21,7 +21,7 @@ function NavBar({}: Props) {
       </Link>
 
       <div className={style.icons}>
-        <i className={`${style.bi} ${["bi bi-bag-heart-fill"]}`}></i>
+        <i className={`${style.bi} ${["bi-bag-heart-fill"]}`}></i>
         <div className={style.linea}></div>
         <Link to="/login">
           <i className={`${style.bi} ${["bi-person-fill"]}`}></i>

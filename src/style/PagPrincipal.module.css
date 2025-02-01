@@ -1,60 +1,97 @@
-.espacio70{
-    height: 70px;
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+.contCards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 50px;
+  justify-content: center;
+  padding: 20px;
+  padding-top: 10px;
+  margin-bottom: 20px;
 }
-.imgCarrusel{
-    height: 50vh;
-    align-content: center;
-    text-align: center;
+.carta {
+  position: relative;
+  text-align: center;
+  height: 300px;
+  width: 200px;
 }
-.imgCarrusel > img{
-    width: inherit;
-    height: inherit;
-    object-fit: cover;
+.carta > img {
+  height: inherit;
+  width: inherit;
+  object-fit: cover;
 }
 
-.contCards{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 80px;
-    justify-content: center;
-    padding: 20px;
-    padding-top: 10px;
+.infoCard {
+  position: absolute;
+  height: 70px;
+  width: inherit;
+  bottom: -30px;
 }
-.carta{
-    position: relative;
-    text-align: center;
-    height: 300px;
-    width: 200px;
-    
-}
-.carta > img{
-    height: inherit;
-    width: inherit;
-    object-fit: cover;
-    border-radius: 20px;
+.btnCard {
+  width: 150px;
+  padding: 6px;
+  margin: 0;
+  border: 0;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: 200;
+  background-color: rgba(255, 255, 255, 0.43);
+  bottom: 0;
+  color: rgb(0, 0, 0);
 }
 
-.infoCard{
-    position: absolute;
-    height: 70px;
-    width: inherit;
-    bottom: 3px;
+/*SLIDER */
+
+.imgCarrusel {
+  height: auto;
+  align-content: center;
+  text-align: center;
 }
-.textCard{
-    bottom: 30px;
-    color: #000000da;
-    
-    margin: 5px;
-    width: inherit;
+.imgCarrusel > img {
+  width: inherit;
+  height: inherit;
+  object-fit: cover;
 }
-.btnCard{
-    width: 100px;
-    padding: 3px 6px;
-    margin: 0;
-    border: 0;
-    border-radius: 10px;
-    size: 8px;
-    background-color: rgba(0, 0, 0, 0.501);
-    bottom: 0;
-    
+
+.slider {
+  height: auto;
+  width: inherit;
+  margin-bottom: 2rem;
+}
+
+.homePage {
+  width: 100%;
+}
+
+/*Imagenes extra*/
+
+.imagenes{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  width: 98%;
+  margin-left: 1%;
+  margin-bottom: 20px;
+}
+
+.imgpag {
+  position: relative;
+  width: 100%;
+  align-content: center;
+  text-align: center;
+
+}
+.imgpag > img {
+  width: inherit;
+  height: inherit;
+  object-fit: cover;
+}
+
+.imgpag > p{
+  position: absolute;
+  top: 5%;
+  margin-left: 5%;
+  font-size: 20px;
+  color: rgb(0, 0, 0);
+  font-weight: 200;
 }
