@@ -33,7 +33,7 @@ function Custom() {
   
   const location = useLocation();
   const stamp = location.state;
-  const stampPrice = parseFloat(stamp.precio.replace("$", "").replace(".", ""));
+  const stampPrice = stamp.precio
 
   const previewRef = useRef();
 

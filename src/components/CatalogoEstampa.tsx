@@ -2,6 +2,7 @@ import { useState ,useEffect} from "react";
 import { Link } from "react-router-dom";
 import { Heart, ShirtIcon } from "lucide-react";
 import style from "../style/CatalogoEstampampa.module.css";
+import axios from "axios";
 type Props = {};
 
 interface Tema {
@@ -12,10 +13,11 @@ interface Tema {
 interface Camisa {
   id: number;
   imagen: string;
-  nombre: string;
+  nombreEstampa: string;
   precio: string;
   idTema: string;
-  artista: string;
+  nombreArtista: string;
+
 }
 
 const temas: Tema[] = [
@@ -24,7 +26,7 @@ const temas: Tema[] = [
   { id: 2, nombre: "Halloween" },
   { id: 3, nombre: "Navidad" },
 ];
-
+/*
 const camisas: Camisa[] = [
   {
     id: 1,
@@ -81,7 +83,7 @@ const camisas: Camisa[] = [
     artista: "Artista 6",
   },
 ];
-
+*/
 const colores = [
   "white",
   "black",
@@ -93,22 +95,41 @@ const colores = [
 ];
 
 function CatalogoEstampa({}: Props) {
+  const [camisas, setCatalogo] = useState<Camisa[]>([]);
   const [temas, setTemas] = useState<{ id: number; nombre: string }[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-  
+  useEffect(() => {
+    const fetchCatalogo = async () => {
+        try {
+            const response = await axios.get<Camisa[]>('http://localhost:8080/catalogo');
+            setCatalogo(response.data);
+            console.log(camisas)
+        } catch (err) {
+            setError('Error al cargar el catálogo');
+            console.error('Error:', err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    fetchCatalogo();
+}, []);
+
   useEffect(() => {
     fetch("http://localhost:8080/")
       .then((res) => res.json())
       .then((data) => setTemas(data));
   }, []);
 
-  const [filtroTema, setFiltroTema] = useState("Todos");
+  const [filtroTema, setFiltroTema] = useState("999");
   const [filtroPrecio, setFiltroPrecio] = useState(15000);
   const [colorFondo, setColorFondo] = useState("white");
 
   const camisasFiltradas = camisas.filter(
     (camisa) =>
-      (filtroTema === "Todos" || camisa.idTema === filtroTema) &&
+      (filtroTema == "999" || camisa.idTema == filtroTema) &&
       Number.parseInt(camisa.precio) <= filtroPrecio
   );
 
@@ -120,9 +141,9 @@ function CatalogoEstampa({}: Props) {
           onChange={(e) => setFiltroTema(e.target.value)}
           className={style.selectTrigger}
         >
-          <option value="Todos">Selecciona un tema</option>
+          <option value="999">Selecciona un tema</option>
           {temas.map((tema) => (
-            <option key={tema.id} value={tema.nombre}>
+            <option key={tema.id} value={tema.id}>
               {tema.nombre}
             </option>
           ))}
@@ -162,7 +183,7 @@ function CatalogoEstampa({}: Props) {
             >
               <img
                 src={camisa.imagen || "/placeholder.svg"}
-                alt={camisa.nombre}
+                alt={camisa.nombreEstampa}
                 className={style.imagen}
               />
               <div className={style.contBtn}>
@@ -171,9 +192,9 @@ function CatalogoEstampa({}: Props) {
                 </Link>
               </div>
             </div>
-            <h2 className={style.nombre}>{camisa.nombre}</h2>
+            <h2 className={style.nombre}>{camisa.nombreEstampa}</h2>
             <p className={style.precio}>${camisa.precio}</p>
-            <p className={style.artista}>{camisa.artista}</p>
+            <p className={style.artista}>{camisa.nombreArtista}</p>
             <button className={style.favoriteButton}>
               <i className={`${style.corazon} ${["bi bi-heart"]}`}></i>
             </button>
