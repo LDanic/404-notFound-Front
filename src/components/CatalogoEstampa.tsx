@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState ,useEffect} from "react";
 import { Link } from "react-router-dom";
 import { Heart, ShirtIcon } from "lucide-react";
 import style from "../style/CatalogoEstampampa.module.css";
+type Props = {};
 
 interface Tema {
   id: number;
@@ -91,7 +92,16 @@ const colores = [
   "#ef4444",
 ];
 
-function CatalogoEstampa() {
+function CatalogoEstampa({}: Props) {
+  const [temas, setTemas] = useState<{ id: number; nombre: string }[]>([]);
+
+  
+  useEffect(() => {
+    fetch("http://localhost:8080/")
+      .then((res) => res.json())
+      .then((data) => setTemas(data));
+  }, []);
+
   const [filtroTema, setFiltroTema] = useState("Todos");
   const [filtroPrecio, setFiltroPrecio] = useState(15000);
   const [colorFondo, setColorFondo] = useState("white");
