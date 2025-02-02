@@ -1,8 +1,12 @@
-//import React from "react";
-import { Link } from "react-router-dom";
-import style from "../style/CatalogoEstampampa.module.css";
 import { useState } from "react";
-type Props = {};
+import { Link } from "react-router-dom";
+import { Heart, ShirtIcon } from "lucide-react";
+import style from "../style/CatalogoEstampampa.module.css";
+
+interface Tema {
+  id: number;
+  nombre: string;
+}
 
 interface Camisa {
   id: number;
@@ -10,130 +14,161 @@ interface Camisa {
   nombre: string;
   precio: string;
   idTema: string;
+  artista: string;
 }
 
-function CatalogoEstampa({}: Props) {
-  const temas = [
-    { id: 1, nombre: "Disney" },
-    { id: 1, nombre: "Halloween" },
-    { id: 1, nombre: "Navidad" },
-  ];
+const temas: Tema[] = [
+  { id: 1, nombre: "Disney" },
+  { id: 2, nombre: "Halloween" },
+  { id: 3, nombre: "Navidad" },
+];
 
-  //Funcionamientod el filtor
-  const [inputValue, setInputValue] = useState("");
+const camisas: Camisa[] = [
+  {
+    id: 1,
+    imagen:
+      "https://raw.githubusercontent.com/LDanic/404-not-found-assets/refs/heads/main/404NotFound.png",
+    nombre: "400 NOT FOUND",
+    precio: "10000",
+    idTema: "Halloween",
+    artista: "Artista 1",
+  },
+  {
+    id: 2,
+    imagen:
+      "https://raw.githubusercontent.com/LDanic/404-not-found-assets/refs/heads/main/wall-eandEve.png",
+    nombre: "Walle & Eva",
+    precio: "12000",
+    idTema: "Disney",
+    artista: "Artista 2",
+  },
+  {
+    id: 3,
+    imagen:
+      "https://raw.githubusercontent.com/LDanic/404-not-found-assets/7d1aa6c10820ae9bf3adfd9e4c55e3e789e412ca/furia.png",
+    nombre: "Furia",
+    precio: "12000",
+    idTema: "Disney",
+    artista: "Artista 3",
+  },
+  {
+    id: 4,
+    imagen:
+      "https://raw.githubusercontent.com/LDanic/404-not-found-assets/refs/heads/main/404NotFound.png",
+    nombre: "400 NOT FOUND",
+    precio: "10000",
+    idTema: "Halloween",
+    artista: "Artista 4",
+  },
+  {
+    id: 5,
+    imagen:
+      "https://raw.githubusercontent.com/LDanic/404-not-found-assets/refs/heads/main/wall-eandEve.png",
+    nombre: "Walle & Eva",
+    precio: "12000",
+    idTema: "Navidad",
+    artista: "Artista 5",
+  },
+  {
+    id: 6,
+    imagen:
+      "https://raw.githubusercontent.com/LDanic/404-not-found-assets/7d1aa6c10820ae9bf3adfd9e4c55e3e789e412ca/furia.png",
+    nombre: "Intensamiente furia",
+    precio: "12000",
+    idTema: "Navidad",
+    artista: "Artista 6",
+  },
+];
 
-  const filtroSeleccionado = (value: string) => {
-    setInputValue(value);
-  };
+const colores = [
+  "white",
+  "black",
+  "lightblue",
+  "pink",
+  "darkblue",
+  "green",
+  "red",
+];
+
+function CatalogoEstampa() {
+  const [filtroTema, setFiltroTema] = useState("Todos");
+  const [filtroPrecio, setFiltroPrecio] = useState(15000);
+  const [colorFondo, setColorFondo] = useState("white");
+
+  const camisasFiltradas = camisas.filter(
+    (camisa) =>
+      (filtroTema === "Todos" || camisa.idTema === filtroTema) &&
+      Number.parseInt(camisa.precio) <= filtroPrecio
+  );
+
   return (
-    <div className="container">
-      <div className="filtro-container">
-        <p>Categorias: </p>
-
-        <div>
+    <div className={style.container}>
+      <div className={style.filtroContainer}>
+        <select
+          value={filtroTema}
+          onChange={(e) => setFiltroTema(e.target.value)}
+          className={style.selectTrigger}
+        >
+          <option value="Todos">Selecciona un tema</option>
           {temas.map((tema) => (
-            <button
-              className="tema"
-              key={tema.id}
-              onClick={() => filtroSeleccionado(tema.nombre)}
-            >
+            <option key={tema.id} value={tema.nombre}>
               {tema.nombre}
-            </button>
+            </option>
           ))}
-          <button className="xTema tema" onClick={() => filtroSeleccionado("")}>
-            <i className="bi bi-x"></i>
-          </button>
+        </select>
+        <div className={style.rango}>
+          <span>Precio máximo: ${filtroPrecio}</span>
+          <input
+            type="range"
+            min="10000"
+            max="20000"
+            value={filtroPrecio}
+            onChange={(e) => setFiltroPrecio(Number(e.target.value))}
+            className={style.range}
+          />
+        </div>
+
+        <div className={style.colores}>
+          {colores.map((color) => (
+            <button
+              key={color}
+              style={{ backgroundColor: color }}
+              onClick={() => setColorFondo(color)}
+              className={`${style.colorButton} ${
+                colorFondo === color ? style.colorActivo : ""
+              }`}
+            />
+          ))}
         </div>
       </div>
-      {contCatalogo(inputValue)}
-    </div>
-  );
-}
-
-function contCatalogo(value: string) {
-  const camisas = [
-    {
-      id: 1,
-      imagen:
-        "https://raw.githubusercontent.com/LDanic/404-not-found-assets/refs/heads/main/404NotFound.png",
-      nombre: "400 NOT FOUND",
-      precio: "$10.000",
-      idTema: "Halloween",
-    },
-    {
-      id: 2,
-      imagen:
-        "https://raw.githubusercontent.com/LDanic/404-not-found-assets/refs/heads/main/wall-eandEve.png",
-      nombre: "Walle & Eva",
-      precio: "$12.000",
-      idTema: "Disney",
-    },
-    {
-      id: 3,
-      imagen:
-        "https://raw.githubusercontent.com/LDanic/404-not-found-assets/7d1aa6c10820ae9bf3adfd9e4c55e3e789e412ca/furia.png",
-      nombre: "Furia",
-      precio: "$12.000",
-      idTema: "Disney",
-    },
-    {
-      id: 4,
-      imagen:
-        "https://raw.githubusercontent.com/LDanic/404-not-found-assets/refs/heads/main/404NotFound.png",
-      nombre: "400 NOT FOUND",
-      precio: "$10.000",
-      idTema: "Halloween",
-    },
-    {
-      id: 5,
-      imagen:
-        "https://raw.githubusercontent.com/LDanic/404-not-found-assets/refs/heads/main/wall-eandEve.png",
-      nombre: "Walle & Eva",
-      precio: "$12.000",
-      idTema: "Navidad",
-    },
-    {
-      id: 6,
-      imagen:
-        "https://raw.githubusercontent.com/LDanic/404-not-found-assets/7d1aa6c10820ae9bf3adfd9e4c55e3e789e412ca/furia.png",
-      nombre: "Intensamiente furia",
-      precio: "$12.000",
-      idTema: "Navidad",
-    },
-  ];
-
-  let camisasFiltradas = camisas;
-
-  if (value !== "") {
-    camisasFiltradas = [];
-    camisas.forEach((camisa) => {
-      if (value === camisa.idTema) {
-        camisasFiltradas.push(camisa);
-      }
-    });
-  }
-
-  return (
-    <div className={style.catalogoContainer}>
-      {camisasFiltradas.map((camisa) => (
-        <div className={style.carta} key={camisa.id}>
-          <div className={style.contimagen}>
-            <img
-              src={camisa.imagen}
-              alt={camisa.nombre}
-              className={style.imagen}
-            />
-            <div className={style.contBtn}>
-            <Link to="/custom" state={camisa}>
-                <button className={style.btnCamisa}>Configurar camisa</button>
-              </Link>
+      <div className={style.linea}></div>
+      <div className={style.catalogoContainer}>
+        {camisasFiltradas.map((camisa) => (
+          <div className={style.carta} key={camisa.id}>
+            <div
+              className={style.contimagen}
+              style={{ backgroundColor: colorFondo }}
+            >
+              <img
+                src={camisa.imagen || "/placeholder.svg"}
+                alt={camisa.nombre}
+                className={style.imagen}
+              />
+              <div className={style.contBtn}>
+                <Link to="/custom" state={camisa}>
+                  <button className={style.btnCamisa}>Configurar camisa</button>
+                </Link>
+              </div>
             </div>
+            <h2 className={style.nombre}>{camisa.nombre}</h2>
+            <p className={style.precio}>${camisa.precio}</p>
+            <p className={style.artista}>{camisa.artista}</p>
+            <button className={style.favoriteButton}>
+              <i className={`${style.corazon} ${["bi bi-heart"]}`}></i>
+            </button>
           </div>
-          <h2 className={style.nombre}>{camisa.nombre}</h2>
-          <p className={style.precio}>{camisa.precio}</p>
-          <i className={`${style.bi} ${style["bi-suit-heart-fill"]}`}></i>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }

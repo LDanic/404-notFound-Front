@@ -1,57 +1,80 @@
 @import "bootstrap-icons/font/bootstrap-icons.css";
 
-*{
-    padding: 0;
-    margin: 0;
-    border: 0;
-}
-.div70px{
-  height: 70px;
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  font-family: unset;
 }
 
-.container{
-  padding-top: 70px;  
+
+.linea {
+  background-color: #000000;
+  height: 1px;
+  width: 95%;
+  margin: 0;
+  margin-left: 2.5%;
+  padding: 0;
 }
-/*fltro */
-.filtroContainer{
-  display: flex;
+
+.filtroContainer {
+  width: 668px;
+  margin: 20px auto;
+  display: grid;
+  place-items: center;
+  align-items: center;
+  grid-template-columns: 170px 190px 228px;
+  gap: 40px;
 }
-.filtroContainer>p{
-  padding: 0px 10px;
-  font-size: 1em;
-  margin-top: 10px;
+
+.selectTrigger {
+  width: 170px;
+  font-size: 16px;
+  color: #626262;
+  font-weight: 300;
 }
-.filtroContainer >div{
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+
+.rango {
+  font-size: 16px;
+  color: #626262;
+  font-weight: 300;
+  align-items: center;
   justify-content: center;
-  padding: 10px 20px;
+  text-align: center;
 }
 
-.tema{
-  font-size: 0.85em;
-  padding: 4px 8px;
-  border: 1px solid rgb(78, 78, 78);
-  border-radius: 10px;
-  background-color: rgb(255, 255, 255);
-  color: black;
+.range {
+  width: 190px;
 }
 
-.xTema{
-  border-radius: 20px;
-  font-size: 15px;
-
+.colores {
+  display: flex;
+  gap: 10px;
+  width: 228px;
+  margin: 0;
+  padding: 0;
 }
 
-/*Configuración por estampa*/
+.colorButton {
+  width: 24px;
+  height: 24px;
+  border: 1px solid rgba(0, 0, 0, 0.084);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.colorActivo {
+  border: 1px solid #000000;
+}
+
+/*Catalogo*/
+
 .catalogoContainer {
   display: flex;
   flex-wrap: wrap;
   gap: 40px;
   justify-content: center;
   padding: 20px;
-  padding-top: 10px;
 }
 
 .carta {
@@ -64,9 +87,15 @@
   position: relative;
   height: 300px;
   width: inherit;
-  background-color: #e4e4e4;
   align-content: center;
   text-align: center;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.carta:hover .contimagen {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.166);
 }
 
 .imagen {
@@ -80,6 +109,7 @@
   margin: 4px;
   padding: 8px 0 4px 0;
   color: #333;
+  font-weight: 450;
 }
 
 .precio {
@@ -88,39 +118,40 @@
   margin: 4px;
 }
 
-.bi-suit-heart-fill{
-    position: absolute;
-    color: rgb(232, 232, 232);
-    bottom: 0;
-    right: 0;
-    margin: 4px;
-    font-size: 1.2em;
-    cursor: pointer;
+.artista {
+  font-size: 0.9em;
+  color: #888;
+  margin: 4px;
 }
+
+.favoriteButton {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color:rgb(255, 255, 255);
+  font-size: 20px;
+  color: #898989;
+  cursor: pointer;
+}
+
 
 .btnCamisa {
   position: absolute;
-  background-color: #ffffffd0;
+  background-color: rgba(6, 6, 6, 0.205);
   visibility: hidden;
-  color: #535353;
+  color: #ffffff;
   border: none;
   cursor: pointer;
   bottom: 0;
   left: 0;
   width: 100%;
   height: 15%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  font-size: 15px;
 }
 
-.carta:hover {
-  .btnCamisa {
-    visibility: visible;
-  }
-}
-.bi-suit-heart-fill:hover{
-    color: red;
-}
-
-.tema:hover{
-  background-color: #5a5a5a;
-  color: white;
+.carta:hover .btnCamisa {
+  visibility: visible;
+  opacity: 1;
 }
