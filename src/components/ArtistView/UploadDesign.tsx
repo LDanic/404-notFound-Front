@@ -1,41 +1,128 @@
-"use client"
-
 import { useState } from "react"
 import { Upload } from "lucide-react"
 import styles from "../../style/UploadDesign.module.css"
 
-interface UploadDesignProps {
-  onUpload: (design: { name: string }) => void
+ 
+interface DesignData {
+  name: string
+  description: string
+  theme: string
+  price: number
+  imageUrl: string
 }
-
+ 
+interface UploadDesignProps {
+  onUpload: (design: DesignData) => void
+}
+ 
 export default function UploadDesign({ onUpload }: UploadDesignProps) {
-  const [newDesign, setNewDesign] = useState<File | null>(null)
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setNewDesign(e.target.files[0])
-    }
+  const [designData, setDesignData] = useState<DesignData>({
+    name: "",
+    description: "",
+    theme: "",
+    price: 0,
+    imageUrl: "",
+  })
+ 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setDesignData((prev) => ({
+      ...prev,
+      [name]: name === "price" ? Number.parseFloat(value) || 0 : value,
+    }))
   }
-
-  const handleUpload = (e: React.FormEvent) => {
+ 
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (newDesign) {
-      onUpload({ name: newDesign.name })
-      setNewDesign(null)
-    }
+    onUpload(designData)
+    setDesignData({
+      name: "",
+      description: "",
+      theme: "",
+      price: 0,
+      imageUrl: "",
+    })
   }
-
+ 
   return (
-    <form onSubmit={handleUpload} className={styles.form}>
+    <form onSubmit={handleSubmit} className={styles.form}>
       <div className={styles.inputGroup}>
-        <label htmlFor="design-upload" className={styles.label}>
-          Estampa
+        <label htmlFor="name" className={styles.label}>
+          Nombre de la estampa
         </label>
-        <input id="design-upload" type="file" onChange={handleFileChange} className={styles.input} />
+        <input
+          id="name"
+          name="name"
+          type="text"
+          value={designData.name}
+          onChange={handleInputChange}
+          required
+          className={styles.input}
+        />
       </div>
-      <button type="submit" disabled={!newDesign} className={styles.button}>
-        <Upload size={16} />
-        Upload Design
+ 
+      <div className={styles.inputGroup}>
+        <label htmlFor="description" className={styles.label}>
+          Descripción
+        </label>
+        <textarea
+          id="description"
+          name="description"
+          value={designData.description}
+          onChange={handleInputChange}
+          required
+          className={styles.textarea}
+        />
+      </div>
+ 
+      <div className={styles.inputGroup}>
+        <label htmlFor="theme" className={styles.label}>
+          Tema
+        </label>
+        <input
+          id="theme"
+          name="theme"
+          type="text"
+          value={designData.theme}
+          onChange={handleInputChange}
+          required
+          className={styles.input}
+        />
+      </div>
+ 
+      <div className={styles.inputGroup}>
+        <label htmlFor="price" className={styles.label}>
+          Precio
+        </label>
+        <input
+          id="price"
+          name="price"
+          type="number"
+          step="0.01"
+          value={designData.price}
+          onChange={handleInputChange}
+          required
+          className={styles.input}
+        />
+      </div>
+ 
+      <div className={styles.inputGroup}>
+        <label htmlFor="imageUrl" className={styles.label}>
+          Link de la imagen
+        </label>
+        <input
+          id="imageUrl"
+          name="imageUrl"
+          type="url"
+          value={designData.imageUrl}
+          onChange={handleInputChange}
+          required
+          className={styles.input}
+        />
+      </div>
+ 
+      <button type="submit" className={styles.button}>
+        <Upload size={16} className={styles.up}/>  Subir diseño
       </button>
     </form>
   )

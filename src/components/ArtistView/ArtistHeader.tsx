@@ -3,14 +3,15 @@
 import { useState } from "react"
 import { Pencil } from "lucide-react"
 import styles from "../../style/ArtistHeader.module.css"
+import User from "../../assets/ProfileArtist.png"
+
 
 interface ArtistHeaderProps {
   initialName: string
   initialDescription: string
-  avatarUrl: string
 }
 
-export default function ArtistHeader({ initialName, initialDescription, avatarUrl }: ArtistHeaderProps) {
+export default function ArtistHeader({ initialName, initialDescription }: ArtistHeaderProps) {
   const [name, setName] = useState(initialName)
   const [description, setDescription] = useState(initialDescription)
   const [isEditing, setIsEditing] = useState(false)
@@ -23,7 +24,7 @@ export default function ArtistHeader({ initialName, initialDescription, avatarUr
   return (
     <div className={styles.header}>
       <div className={styles.avatar}>
-        <img src={avatarUrl || "/placeholder.svg"} alt={name} className={styles.avatarImage} />
+        <img src={User || "/placeholder.svg"} alt={name} className={styles.avatarImage} />
       </div>
       <div className={styles.info}>
         {isEditing ? (

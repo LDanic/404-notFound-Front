@@ -11,7 +11,7 @@ function NavBar({}: Props) {
           <h3>Catalogo</h3> <p>+1000 estampas</p>
         </Link>
         <div className={style.linea}></div>
-        <Link to="/catalogo" className={style.artistas}>
+        <Link to="/artista" className={style.artistas}>
           <h3>Artistas</h3> <p>+100 artistas</p>
         </Link>
       </div>
