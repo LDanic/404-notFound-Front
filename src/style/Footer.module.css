@@ -30,7 +30,8 @@
 }
 
 .footer > div > ul,
-.footer > div > i {
+.footer > div > i,
+.footer > div > img {
   cursor: pointer;
 }
 .linea {

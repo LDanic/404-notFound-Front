@@ -18,6 +18,7 @@ interface Camisa {
 }
 
 const temas: Tema[] = [
+  { id: 1, nombre: "Todos" },
   { id: 1, nombre: "Disney" },
   { id: 2, nombre: "Halloween" },
   { id: 3, nombre: "Navidad" },
@@ -83,11 +84,11 @@ const camisas: Camisa[] = [
 const colores = [
   "white",
   "black",
-  "lightblue",
-  "pink",
-  "darkblue",
-  "green",
-  "red",
+  "#bfdbfe",
+  "#fbb6ce",
+  "#004566",
+  "#bbf7d0",
+  "#ef4444",
 ];
 
 function CatalogoEstampa() {

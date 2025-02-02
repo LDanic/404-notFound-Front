@@ -1,5 +1,6 @@
 import styles from "../style/SignUp.module.css";
 import React, { useState } from "react";
+import {Link} from "react-router-dom"
 
 function SignUp() {
   const validarContraseña = (e) => {
@@ -214,7 +215,7 @@ function SignUp() {
               <h3
                 className={`${styles.sesion} ${styles.boxFade} ${styles.sixth}`}
               >
-                ¿Ya tienes cuenta? <a href="">Inicia sesión</a>
+                ¿Ya tienes cuenta?  <Link to="/login" className={styles.a}>Inicia sesión</Link>
               </h3>
             </form>
           </div>

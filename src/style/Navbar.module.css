@@ -1,5 +1,4 @@
 @import "bootstrap-icons/font/bootstrap-icons.css";
-
 .navb {
     position: fixed;
     top: 0;
@@ -59,4 +58,12 @@
 
 .icons > .linea{
     height: 40px;
+}
+
+a{
+    color: rgb(109, 109, 109);
+}
+
+a:hover{
+    color: rgb(44, 44, 44);
 }

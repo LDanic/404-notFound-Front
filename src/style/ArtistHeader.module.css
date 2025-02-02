@@ -12,6 +12,7 @@
   overflow: hidden;
   box-shadow: 1px 1px 8px 2px#4a556831;
   margin-right: 15px;
+  opacity: 50%;
 }
 
 .avatarImage {
