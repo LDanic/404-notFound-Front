@@ -1,7 +1,7 @@
 //import React from "react";
 import { Link } from "react-router-dom";
 import style from "../style/CatalogoEstampampa.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 type Props = {};
 
 interface Camisa {
@@ -13,11 +13,14 @@ interface Camisa {
 }
 
 function CatalogoEstampa({}: Props) {
-  const temas = [
-    { id: 1, nombre: "Disney" },
-    { id: 1, nombre: "Halloween" },
-    { id: 1, nombre: "Navidad" },
-  ];
+  const [temas, setTemas] = useState<{ id: number; nombre: string }[]>([]);
+
+  
+  useEffect(() => {
+    fetch("http://localhost:8080/")
+      .then((res) => res.json())
+      .then((data) => setTemas(data));
+  }, []);
 
   //Funcionamientod el filtor
   const [inputValue, setInputValue] = useState("");

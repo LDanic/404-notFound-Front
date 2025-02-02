@@ -4,21 +4,42 @@ import robot from "../assets/LoginSignup/Robot.png";
 import muestra from "../assets/LoginSignup/404Muestra.jpg";
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, Navigate, redirect } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 
 const Login: React.FC = () => {
+  const navigate = useNavigate();
   const [usuario, setUsuario] = useState<string>("");
   const [contrasena, setContrasena] = useState<string>("");
   const [error, setError] = useState<string>("");
-
+  const [tipoCliente, setTipoCliente] = useState('');
   // Función para manejar el evento de login
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const nuevoValor = event.target.value;
+    setTipoCliente(nuevoValor);
+    console.log(nuevoValor);
+  };
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    let direccion: string = "http://localhost:8080/default-login";
+    if (tipoCliente == "cliente"){
+     direccion = "http://localhost:8080/clientes/login";  
+    }
+    if (tipoCliente == "artista"){
+      direccion = "http://localhost:8080/artista/login";  
+     }
+   
     try {
       // Enviamos la solicitud GET al backend
-      const response = await axios.get<boolean>(
-        "http://localhost:8080/clientes/login",
+      if (direccion =="http://localhost:8080/default-login" ){
+        alert('login fallido, seleccione tipo de login')
+        return false
+      }
+      const response = await axios.get<number>(
+        
+
+        direccion,
         {
           params: {
             usuario: usuario,
@@ -27,19 +48,21 @@ const Login: React.FC = () => {
         }
       );
 
-      // Verificamos la respuesta del backend
-      if (response.data) {
-        alert("Login exitoso");
-        // Redirigir a otra página si es necesario, por ejemplo:
-        // window.location.href = '/dashboard';
-      } else {
-        setError("Usuario o contraseña incorrectos");
-        alert("Usuario o contraseña incorrectos");
+      if (response.status === 200) {
+        localStorage.setItem('idCliente', response.data.toString());
+        console.log(localStorage.getItem('idCliente'));
+        navigate("/");
       }
+
     } catch (error) {
-      console.error("Error al conectar con el servidor:", error);
-      setError("No se pudo conectar con el servidor");
+      if (axios.isAxiosError(error)) { // ← Verifica si es un error de Axios
+        if (error.response?.status === 401) {
+            alert("Credenciales incorrectas");
+        }
     }
+      }
+
+    
   };
 
   return (
@@ -59,7 +82,8 @@ const Login: React.FC = () => {
               </legend>
               <select
                 className={`${style.sujeto} ${style.boxFade} ${style.first}`}
-                name=""
+                name="TipoCliente"
+                onChange={handleChange}
                 required
               >
                 <option>¿Qué eres?</option>
