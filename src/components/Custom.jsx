@@ -6,7 +6,7 @@ import NavBar from "/src/components/NavBar.tsx";
 import { cartUtils } from '../utils/carUtils';
 import { useLocation } from "react-router-dom";
 import * as htmlToImage from "html-to-image";
-import { CheckCircle } from 'lucide-react';
+import { CheckCircle, Plus, Minus, Eye } from 'lucide-react';
 
 const COLORS = [
   { name: 'white', label: 'White' },
@@ -28,8 +28,10 @@ function Custom() {
   const [selectedFabric, setSelectedFabric] = useState('Lana')
   const [selectedModel, setSelectedModel] = useState('R')
   const [shirtPrice, setShirtPrice] = useState(40000);
-  const [position, setPosition] = useState({ x: 125, y: 175 });
+  const [position, setPosition] = useState({ x: 0, y: 0 });
   const [showToast, setShowToast] = useState(false);
+  const [quantity, setQuantity] = useState(1);
+  const [showLimits, setShowLimits] = useState(false);
   
   const location = useLocation();
   const stamp = location.state;
@@ -37,27 +39,35 @@ function Custom() {
 
   const previewRef = useRef();
 
-  const handleAddToCart = () => {
-    htmlToImage.toPng(previewRef.current, { useCORS: true }).then((dataUrl) => {
-      const newItem = {
-        selectedColor,
-        selectedModel,
-        selectedFabric,
-        selectedSize,
-        stamp,
-        shirtPrice: shirtPrice,
-        stampPrice: stampPrice,
-        position,
-        quantity: 1,
-        previewImage: dataUrl,
-        name: `Camiseta personalizada - ${stamp.nombre}`,
-        total: shirtPrice + stampPrice
-      };
+  const handleQuantityChange = (delta) => {
+    setQuantity(prev => Math.max(1, prev + delta));
+  };
 
-      cartUtils.addToCart(newItem);
-      setShowToast(true);
-      setTimeout(() => setShowToast(false), 3000);
-    });
+  const handleAddToCart = () => {
+    setShowLimits(false);
+    setTimeout(() => {
+      htmlToImage.toPng(previewRef.current, { useCORS: true }).then((dataUrl) => {
+        const newItem = {
+          selectedColor,
+          selectedModel,
+          selectedFabric,
+          selectedSize,
+          stamp,
+          shirtPrice: shirtPrice,
+          stampPrice: stampPrice,
+          position,
+          quantity,
+          previewImage: dataUrl,
+          name: `Camiseta personalizada - ${stamp.nombreEstampa}`,
+          total: shirtPrice + stampPrice
+        };
+  
+        cartUtils.addToCart(newItem);
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 3000);
+      });
+
+    }, 1000);
   };
 
   const handleChangeStamp = () => {
@@ -73,13 +83,28 @@ function Custom() {
   }, [selectedFabric]);
 
   return (
-  <div className={style.container}>
-
-    <div className={style.mainContent}>
-      {/* Left Column - T-shirt Preview */}
-      <div className={style.previewPanel} ref={previewRef}>
-        <Stamp_move setPosition={setPosition} selectedModel={selectedModel} selectedColor={selectedColor} selectedImage={stamp.imagen}/>
-      </div>
+    <div className={style.container}>
+      <div className={style.mainContent}>
+        {/* Left Column - T-shirt Preview */}
+        <div className={style.previewPanel}>
+          <div ref={previewRef}>
+            <Stamp_move 
+              key={showLimits}
+              position={position} 
+              selectedModel={selectedModel} 
+              selectedColor={selectedColor} 
+              selectedImage={stamp.imagen}
+              showLimits={showLimits}
+            />
+          </div>
+          <button 
+              className={`${style.viewLimitsBtn} ${showLimits ? style.active : ''}`}
+              onClick={() => setShowLimits(!showLimits)}
+            >
+              <Eye size={20} />
+              {showLimits ? 'Ocultar límites' : 'Ver límites'}
+          </button>
+        </div>
 
         {/* Right Column - Customization Options */}
         <div className={style.customizationPanel}>
@@ -93,13 +118,30 @@ function Custom() {
                 />
               </div>
               <div className={style.stampDetails}>
-                <h1>{stamp.nombre}</h1>
-                <p>Artista: {stamp.artista}</p>
+                <h1>{stamp.nombreEstampa}</h1>
+                <p>Artista: {stamp.nombreArtista}</p>
                 <p className={style.price}>${stampPrice}</p>
               </div>
             </div>
 
             <div className={style.stampActions}>
+              <div className={style.quantityControl}>
+                <button 
+                  onClick={() => handleQuantityChange(-1)}
+                  className={style.quantityBtn}
+                  disabled={quantity <= 1}
+                >
+                  <Minus size={16} />
+                </button>
+                <span className={style.quantityDisplay}>{quantity}</span>
+                <button 
+                  onClick={() => handleQuantityChange(1)}
+                  className={style.quantityBtn}
+                  disabled={quantity == stamp.stock}
+                >
+                  <Plus size={16} />
+                </button>
+              </div>
               <button className={`${style.btn} ${style.btnChange}`} onClick={handleChangeStamp}>
                 CAMBIAR ESTAMPA     
               </button>
@@ -177,7 +219,7 @@ function Custom() {
 
             <div className={style.total}>
               <span>Total:</span>
-              <span>${shirtPrice + stampPrice}</span>
+              <span>${(shirtPrice + stampPrice) * quantity}</span>
             </div>
           </div>
         </div>
@@ -192,4 +234,4 @@ function Custom() {
   );
 }
 
-export default Custom
+export default Custom;

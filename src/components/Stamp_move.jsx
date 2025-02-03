@@ -12,9 +12,10 @@ const CustomNode = ({ data }) => {
   );
 };
 
-function Stamp_move({ setPosition, selectedModel, selectedColor, selectedImage}) {
+function Stamp_move({ position, selectedModel, selectedColor, selectedImage, showLimits}) {
   const [backgroundImage, setBackgroundImage] = useState('');
   const [showErrorToast, setShowErrorToast] = useState(false);
+  const [pos, setPosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const getImagePath = (model, color) => {
@@ -34,7 +35,9 @@ function Stamp_move({ setPosition, selectedModel, selectedColor, selectedImage})
       style: { 
         width: 240, 
         height: 350, 
-        border: 'none',
+        border: showLimits ? '2px dashed rgba(0, 0, 0, 0.6)' : 'none',
+        borderRadius: showLimits ? '8px' : '0',
+        boxShadow: showLimits ? '0px 0px 8px rgba(0, 0, 0, 0.3)' : 'none',
         pointerEvents: 'none', 
         backgroundColor: 'transparent' 
       },
@@ -48,7 +51,7 @@ function Stamp_move({ setPosition, selectedModel, selectedColor, selectedImage})
                 alt="Estampa" 
                 style={{ width: '100px', height: '100px' }} /> 
       },
-      position: { x: 0, y: 0 },
+      position: pos,
       parentId: '0',
       extent: 'parent',
       draggable: true,
@@ -61,7 +64,7 @@ function Stamp_move({ setPosition, selectedModel, selectedColor, selectedImage})
 
   const drag = useCallback((event, node) => {
     setPosition(node.position);
-  }, [setPosition]);
+  }, [pos]);
 
   return (
     <div className={style.containerPreview}>

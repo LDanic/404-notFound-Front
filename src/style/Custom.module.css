@@ -6,10 +6,11 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
-  margin-top: 5rem;
+  margin-top: 2%;
 }
 
 .previewPanel {
+  position: relative;
   background: white;
   padding: 2rem;
   border-radius: 8px;
@@ -20,6 +21,37 @@
   width: 100%;
   height: auto;
   object-fit: contain;
+}
+
+.viewLimitsBtn {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 9999px;
+  color: #666;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.viewLimitsBtn:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+  color: #4b5563;
+}
+
+.viewLimitsBtn.active {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  color: white;
 }
 
 .customizationPanel {
@@ -83,6 +115,48 @@
   flex-wrap: wrap;
   flex-direction: column;
   max-width: 230px;
+}
+
+.quantityControl {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #f9fafb;
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid #e5e5e5;
+  justify-content: space-around;
+}
+
+.quantityBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: white;
+  border-radius: 6px;
+  color: #4b5563;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.quantityBtn:hover:not(:disabled) {
+  background: #f3f4f6;
+  color: #1f2937;
+}
+
+.quantityBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.quantityDisplay {
+  min-width: 40px;
+  text-align: center;
+  font-weight: 600;
+  color: #1f2937;
 }
 
 .optionsSection {

@@ -17,8 +17,8 @@ function Cart() {
   };
 
   const handleQuantityChange = (index, quantity) => {
+    const updatedCart = [...cartItems];
     if (quantity >= 1) {
-      const updatedCart = [...cartItems];
       updatedCart[index].quantity = quantity;
       setCartItems(updatedCart);
       cartUtils.updateQuantity(index, quantity);
@@ -46,7 +46,11 @@ function Cart() {
   };
 
   const handleCheckout = () => {
-    navigate('/checkout');
+    if(JSON.parse(localStorage.getItem('idCliente'))){
+      navigate('/checkout');
+    }else{
+      navigate('/login');
+    }
   };
 
   const handleGoBack = () => {
@@ -133,6 +137,7 @@ function Cart() {
                             onClick={() => handleQuantityChange(index, item.quantity - 1)}
                             className={style.quantityBtn}
                             aria-label="Reducir cantidad"
+                            disabled={item.quantity <= 1}
                           >
                             <Minus size={16} />
                           </button>
@@ -141,6 +146,7 @@ function Cart() {
                             onClick={() => handleQuantityChange(index, item.quantity + 1)}
                             className={style.quantityBtn}
                             aria-label="Aumentar cantidad"
+                            disabled={item.quantity == item.stamp.stock}
                           >
                             <Plus size={16} />
                           </button>
