@@ -14,6 +14,7 @@ import OrderSuccess from "./components/OrderSuccess";
 import Artista from "./components/ArtistView/page.tsx";
 import Esapcio from "./components/EspacioNavbar.tsx";
 import Footer from "./components/Footer.tsx";
+import MiCuenta from "./components/MiCuenta.tsx";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 createRoot(document.getElementById("root")).render(
@@ -33,6 +34,7 @@ createRoot(document.getElementById("root")).render(
           <Route path="/pagPrincipal" element={<PagPrincipal />} />
           <Route path="/signUp" element={<SignUp />} />
           <Route path="/artista" element={<Artista />} />
+          <Route path="/miCuenta" element={<MiCuenta />} />
         </Routes>
         
         <Footer />

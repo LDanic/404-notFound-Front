@@ -23,11 +23,11 @@ function NavBar({}: Props) {
       <div className={style.icons}>
         <i className={`${style.bi} ${["bi-bag-heart-fill"]}`}></i>
         <div className={style.linea}></div>
-        <Link to="/login">
+        <Link to="/login" className={style.bi}>
           <i className={`${style.bi} ${["bi-person-fill"]}`}></i>
         </Link>
         <div className={style.linea}></div>
-        <Link to="/cart">
+        <Link to="/cart" className={style.bi}>
         <i className={`${style.bi} ${["bi-cart-fill"]}`}></i>
         </Link>
         
