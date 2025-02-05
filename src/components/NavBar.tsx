@@ -1,9 +1,20 @@
 import style from "../style/Navbar.module.css";
 import logo from "../assets/Logo/Logo/404 not found logoN.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 type Props = {};
 
 function NavBar({}: Props) {
+  const navigate = useNavigate();
+
+  const handleAccount = () => {
+    if(localStorage.getItem('idCliente')){
+      navigate('/miCuenta');
+    }else{
+      navigate('/login');
+    }
+  }
+
   return (
     <div className={style.navb}>
       <div className={style.opciones}>
@@ -23,9 +34,7 @@ function NavBar({}: Props) {
       <div className={style.icons}>
         <i className={`${style.bi} ${["bi-bag-heart-fill"]}`}></i>
         <div className={style.linea}></div>
-        <Link to="/login" className={style.bi}>
-          <i className={`${style.bi} ${["bi-person-fill"]}`}></i>
-        </Link>
+        <i className={`${style.bi} ${["bi-person-fill"]}`} onClick={handleAccount}></i>
         <div className={style.linea}></div>
         <Link to="/cart" className={style.bi}>
         <i className={`${style.bi} ${["bi-cart-fill"]}`}></i>
