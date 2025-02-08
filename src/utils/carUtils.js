@@ -23,7 +23,7 @@ export const cartUtils = {
     localStorage.setItem('cart', JSON.stringify(cart));
     return cart;
   },
-  
+
   updateItem(index, item) {
     const cart = this.getCart();
     cart[index] = { ...cart[index], ...item };

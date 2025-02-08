@@ -51,7 +51,13 @@ const Login: React.FC = () => {
       if (response.status === 200) {
         localStorage.setItem('idCliente', response.data.toString());
         console.log(localStorage.getItem('idCliente'));
-        navigate("/");
+        if(tipoCliente =="cliente"){
+          navigate("/");
+        }
+        if(tipoCliente =="artista"){
+          navigate("/artista");
+        }
+        
       }
 
     } catch (error) {
