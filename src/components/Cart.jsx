@@ -44,15 +44,65 @@ function Cart() {
     setCartItems(updatedCart);
     cartUtils.updateItem(index, updatedCart[index]);
   };
-
+/*
   const handleCheckout = () => {
     if(JSON.parse(localStorage.getItem('idCliente'))){
-      navigate('/checkout');
+     // navigate('/checkout');
+
     }else{
       navigate('/login');
     }
   };
+*/
+// NO SÉ SI ESTO DEBER IR ACÁ, ESTO PROCESA TODO EL CARRITO Y SIMULA EL PAGO, PONLO DONDE DEBA IR REALMENTE,
+//  EL CÓDIGO ANTERIOR ESTÁ AHÍ 
+///// empieza código q maybe hay q reubicar
+const handleCheckout = async () => {
+  // Check if the user is logged in
+  
+  const idCliente = JSON.parse(localStorage.getItem('idCliente'));
+  if (!idCliente) {
+    navigate('/login');
+    return;
+  }
 
+  // Fetch the cart data (assuming it's stored in localStorage)
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+
+  // Check if the cart is empty
+  if (cart.length === 0) {
+    alert('Your cart is empty!');
+    return;
+  }
+
+  try {
+    // Send the cart data to the backend
+    const response = await fetch('http://localhost:8080/clientes/comprarPedido', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(cart), // Send the cart data as JSON
+    });
+
+    // Handle the response
+    if (response.ok) {
+      const data = await response.json();
+      console.log('Order created successfully:', data);
+      alert('FELICIDADES, TUS CAMISETAS ESTARÁN EN CAMINO MUY PRONTO.')
+      //navigate('/checkout'); // Redirect to the checkout page
+    } else {
+      const error = await response.json();
+      console.error('Error during checkout:', error);
+      alert('Checkout failed. Please try again.');
+    }
+  } catch (error) {
+    console.error('Network error:', error);
+    alert('Network error. Please check your connection.');
+  }
+};
+//////termina código a maybe reubicar//////
   const handleGoBack = () => {
     navigate('/catalogo');
   };
