@@ -3,103 +3,90 @@ import { useState } from "react"
 import styles from "../style/MiCuenta.module.css"
 
 interface Direccion {
-  id: number
-  codigoPostal: string
-  numero: string
-  calle: string
-  carrera: string
-  ciudad: string
+  codigo_postal: number
+  nombre_direccion: string
+  direccion: string
+  detalles_direccion: string
 }
 
 interface DireccionEnvioProps {
-  direcciones: Direccion[]
-  onAgregar: (direccion: Omit<Direccion, "id">) => void
+  direccion: Direccion
   onActualizar: (direccion: Direccion) => void
-  onEliminar: (id: number) => void
 }
 
-export default function DireccionEnvio({ direcciones, onAgregar, onActualizar, onEliminar }: DireccionEnvioProps) {
-  const [nuevaDireccion, setNuevaDireccion] = useState<Omit<Direccion, "id">>({
-    codigoPostal: "",
-    numero: "",
-    calle: "",
-    carrera: "",
-    ciudad: "",
-  })
-  const [editando, setEditando] = useState<number | null>(null)
+export default function DireccionEnvio({ direccion, onActualizar }: DireccionEnvioProps) {
+  const [editando, setEditando] = useState(false)
+  const [direccionEditada, setDireccionEditada] = useState(direccion)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (editando !== null) {
-      onActualizar({ id: editando, ...nuevaDireccion })
-      setEditando(null)
-    } else {
-      onAgregar(nuevaDireccion)
-    }
-    setNuevaDireccion({ codigoPostal: "", numero: "", calle: "", carrera: "", ciudad: "" })
+    onActualizar(direccionEditada)
+    setEditando(false)
   }
 
-  const handleEditar = (direccion: Direccion) => {
-    setEditando(direccion.id)
-    setNuevaDireccion(direccion)
+  if (!editando) {
+    return (
+      <div className={styles.card}>
+        <h3>Dirección de Envío</h3>
+        <p>
+          <strong>Nombre:</strong> {direccion.nombre_direccion}
+        </p>
+        <p>
+          <strong>Dirección:</strong> {direccion.direccion}
+        </p>
+        <p>
+          <strong>Detalles:</strong> {direccion.detalles_direccion}
+        </p>
+        <p>
+          <strong>Código Postal:</strong> {direccion.codigo_postal}
+        </p>
+        <div className={styles.cardActions}>
+          <button onClick={() => setEditando(true)}>Editar</button>
+        </div>
+      </div>
+    )
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <input
-          type="text"
-          placeholder="Calle"
-          value={nuevaDireccion.calle}
-          onChange={(e) => setNuevaDireccion({ ...nuevaDireccion, calle: e.target.value })}
-          required
-        />
-        <input
-          type="text"
-          placeholder="Carrera"
-          value={nuevaDireccion.carrera}
-          onChange={(e) => setNuevaDireccion({ ...nuevaDireccion, carrera: e.target.value })}
-          required
-        />
-        <input
-          type="text"
-          placeholder="Número"
-          value={nuevaDireccion.numero}
-          onChange={(e) => setNuevaDireccion({ ...nuevaDireccion, numero: e.target.value })}
-          required
-        />
-        <input
-          type="text"
-          placeholder="Código Postal"
-          value={nuevaDireccion.codigoPostal}
-          onChange={(e) => setNuevaDireccion({ ...nuevaDireccion, codigoPostal: e.target.value })}
-          required
-        />
-        <input
-          type="text"
-          placeholder="Ciudad"
-          value={nuevaDireccion.ciudad}
-          onChange={(e) => setNuevaDireccion({ ...nuevaDireccion, ciudad: e.target.value })}
-          required
-        />
-        <button className={styles.boton} type="submit">{editando !== null ? "Actualizar" : "Agregar"} Dirección</button>
-      </form>
-
-      {direcciones.map((direccion) => (
-        <div key={direccion.id} className={styles.card}>
-          <h3>Dirección de Envío</h3>
-          <p>Calle: {direccion.calle}</p>
-          <p>Carrera: {direccion.carrera}</p>
-          <p>Número: {direccion.numero}</p>
-          <p>Ciudad: {direccion.ciudad}</p>
-          <p>Código Postal: {direccion.codigoPostal}</p>
-          <div className={styles.cardActions}>
-            <button onClick={() => handleEditar(direccion)}>Editar</button>
-            <button onClick={() => onEliminar(direccion.id)}>Eliminar</button>
-          </div>
-        </div>
-      ))}
-    </div>
+    <form onSubmit={handleSubmit} className={styles.form}>
+      <label>Nombre: </label>
+      <input
+        type="text"
+        placeholder="Nombre de la dirección"
+        value={direccionEditada.nombre_direccion}
+        onChange={(e) => setDireccionEditada({ ...direccionEditada, nombre_direccion: e.target.value })}
+        required
+      />
+      <label>Dirección: </label>
+      <input
+        type="text"
+        placeholder="Dirección"
+        value={direccionEditada.direccion}
+        onChange={(e) => setDireccionEditada({ ...direccionEditada, direccion: e.target.value })}
+        required
+      />
+      <label>Detalles: </label>
+      <input
+        type="text"
+        placeholder="Detalles de la dirección"
+        value={direccionEditada.detalles_direccion}
+        onChange={(e) => setDireccionEditada({ ...direccionEditada, detalles_direccion: e.target.value })}
+      />
+      <label>Código postal: </label>
+      <input
+        type="number"
+        placeholder="Código Postal"
+        value={direccionEditada.codigo_postal}
+        onChange={(e) => setDireccionEditada({ ...direccionEditada, codigo_postal: Number(e.target.value) })}
+        required
+      />
+      <div className={styles.formActions}>
+        <button type="submit">Guardar</button>
+        <button type="button" onClick={() => setEditando(false)}>
+          Cancelar
+        </button>
+      </div>
+    </form>
   )
 }
 
