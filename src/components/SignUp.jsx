@@ -51,23 +51,38 @@ function SignUp() {
   };
 
   const handleRegister = async () => {
+    let direccion  = "http://localhost:8080/default-login";
+    if ( formData.tipo == "cliente"){
+     direccion = "http://localhost:8080/clientes/register";  
+    }
+    if (formData.tipo  == "artista"){
+      direccion = "http://localhost:8080/artista/register";  
+     }
+
     try {
-      const response = await axios.post("http://localhost:8080/registro", {
+      if (direccion =="http://localhost:8080/default-login" ){
+        alert('login fallido, seleccione tipo de login')
+        return false
+      }
+     console.log(formData)
+      const response = await axios.get(direccion, {
+        params: {
         nombre: formData.nombre,
         apellido: formData.apellido,
-        tipoDocumento: formData.tipoDocumento,
-        documento: formData.documento,
+        tipo_id: formData.tipoDocumento,
+        numero_id: formData.documento,
         correo: formData.correo,
         usuario: formData.usuario,
         contrasena: formData.contra,
-        tipo: formData.tipo,
+      },
       });
 
-      if (response.status === 201) {
+      if (response.data === true) {
         alert("Registro exitoso");
         navigate("/login");
       }
     } catch (error) {
+      console.log(error)
       alert("Error en el registro. Intente nuevamente.");
     }
   };

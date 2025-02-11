@@ -23,7 +23,9 @@ export default function MedioPago({ tarjetas, onAgregar, onActualizar, onElimina
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (editando !== null) {
-      onActualizar({ id: editando, ...nuevaTarjeta })
+      onActualizar({ id: editando, ...nuevaTarjeta },
+
+      )
       setEditando(null)
     } else {
       onAgregar(nuevaTarjeta)

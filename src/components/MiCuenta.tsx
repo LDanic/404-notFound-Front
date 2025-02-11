@@ -5,6 +5,8 @@ import styles from "../style/MiCuenta.module.css";
 import "../style/MiCuenta.module.css";
 import user from "../assets/ProfileArtist.png";
 import { useEffect } from "react";
+import {useNavigate } from "react-router-dom";
+
 interface Usuario {
   nombre: string
   numeroId: string
@@ -44,6 +46,7 @@ const direccionInicial: Direccion = {
 const tarjetasIniciales: Tarjeta[] = [{ id: 1, numeroTarjeta: "**** **** **** 1234", tipoTarjeta: "Visa", fechaVencimiento: "12/25" }]
 
 export default function MiCuenta() {
+  const navigate = useNavigate();
 
   const [direccion, setDireccion] = useState<Direccion>(direccionInicial) 
   const [direcciones, setDirecciones] = useState<Direccion[]>([]);
@@ -62,16 +65,27 @@ export default function MiCuenta() {
   useEffect(() => {
     fetch("http://localhost:8080/clientes/direcciones")
       .then((res) => res.json())
-      .then((data) => setDireccion(data))
+      .then((data) => {
+        if (data.length === 0) {
+          navigate("/sign2"); // Redirige si no hay datos
+        } else {
+          setDireccion(data);
+        }}
+    )
       .catch((error) => console.error("Error al obtener datos:", error));
   }, []); 
   useEffect(() => {
     fetch("http://localhost:8080/clientes/mediosPago")
       .then((res) => res.json())
       .then((data) => {
-        console.log(data); // Imprime la respuesta en la consola
-        setTarjetas(data);
-      })
+        if (data.length === 0) {
+          navigate("/sign2"); // Redirige si no hay datos
+        } else {
+          console.log(data); // Imprime la respuesta en la consola
+          setTarjetas(data);
+        }}
+
+      )
       .catch((error) => console.error("Error al obtener datos:", error));
   }, []);
 
