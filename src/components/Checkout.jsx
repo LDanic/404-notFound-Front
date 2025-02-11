@@ -27,22 +27,52 @@ function Checkout() {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const orderSummary = {
-      items: cart,
-      total,
-      customerInfo: {
-        name: formData.name,
-        email: formData.email,
-        address: formData.address
-      },
-      orderId: Math.random().toString(36).substr(2, 9)
-    };
-    
-    localStorage.setItem('lastOrder', JSON.stringify(orderSummary));
-    localStorage.removeItem('cart');
-    navigate('/order-success');
+  const handleCheckout = async () => {  
+    // Fetch the cart data (assuming it's stored in localStorage)
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  
+    try {
+      // Send the cart data to the backend
+      const response = await fetch('http://localhost:8080/clientes/comprarPedido', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(cart), // Send the cart data as JSON
+      });
+  
+      // Leer la respuesta como texto
+      const textResponse = await response.text();
+
+      // Verificar si la respuesta contiene "exitosamente"
+      if (textResponse.includes("exitosamente")) {
+        console.log('Orden creada con éxito:', textResponse);
+        alert('FELICIDADES, TUS CAMISETAS ESTARÁN EN CAMINO MUY PRONTO.');
+
+        const orderSummary = {
+          items: cart,
+          total,
+          customerInfo: {
+            name: formData.name,
+            email: formData.email,
+            address: formData.address
+          },
+          orderId: Math.random().toString(36).substr(2, 9)
+        };
+
+        localStorage.setItem('lastOrder', JSON.stringify(orderSummary));
+        navigate('/order-success'); // Redirigir a la página de éxito
+        localStorage.removeItem('cart');
+
+      } else {
+        console.log('Error durante el pago:', textResponse);
+        alert('Error durante el pago:', textResponse);
+      }
+    } catch (error) {
+      alert('Network error. Please check your connection.');
+    }
+
+
   };
 
   return (
@@ -70,7 +100,7 @@ function Checkout() {
           </div>
         </div>
   
-        <form onSubmit={handleSubmit} className={style.checkoutForm}>
+        <form className={style.checkoutForm}>
           <h2>Información de Envío</h2>
           <div className={style.formGroup}>
             <input
@@ -151,7 +181,7 @@ function Checkout() {
             />
           </div>
   
-          <button type="submit" className={style.submitButton}>
+          <button type="submit" className={style.submitButton} onClick={handleCheckout}>
             Confirmar Pedido
           </button>
         </form>
