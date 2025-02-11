@@ -4,8 +4,8 @@ import styles from "../style/MiCuenta.module.css"
 
 interface Tarjeta {
   id: number
-  numero: string
-  tipo: string
+  numeroTarjeta: string
+  tipoTarjeta: string
   fechaVencimiento: string
 }
 
@@ -17,7 +17,7 @@ interface MedioPagoProps {
 }
 
 export default function MedioPago({ tarjetas, onAgregar, onActualizar, onEliminar }: MedioPagoProps) {
-  const [nuevaTarjeta, setNuevaTarjeta] = useState({ numero: "", tipo: "", fechaVencimiento: "" })
+  const [nuevaTarjeta, setNuevaTarjeta] = useState({ numeroTarjeta: "", tipoTarjeta: "", fechaVencimiento: "" })
   const [editando, setEditando] = useState<number | null>(null)
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -28,7 +28,7 @@ export default function MedioPago({ tarjetas, onAgregar, onActualizar, onElimina
     } else {
       onAgregar(nuevaTarjeta)
     }
-    setNuevaTarjeta({ numero: "", tipo: "", fechaVencimiento: "" })
+    setNuevaTarjeta({ numeroTarjeta: "", tipoTarjeta: "", fechaVencimiento: "" })
   }
 
   const handleEditar = (tarjeta: Tarjeta) => {
@@ -42,13 +42,13 @@ export default function MedioPago({ tarjetas, onAgregar, onActualizar, onElimina
         <input
           type="text"
           placeholder="Número de Tarjeta"
-          value={nuevaTarjeta.numero}
-          onChange={(e) => setNuevaTarjeta({ ...nuevaTarjeta, numero: e.target.value })}
+          value={nuevaTarjeta.numeroTarjeta}
+          onChange={(e) => setNuevaTarjeta({ ...nuevaTarjeta, numeroTarjeta: e.target.value })}
           required
         />
         <select
-          value={nuevaTarjeta.tipo}
-          onChange={(e) => setNuevaTarjeta({ ...nuevaTarjeta, tipo: e.target.value })}
+          value={nuevaTarjeta.tipoTarjeta}
+          onChange={(e) => setNuevaTarjeta({ ...nuevaTarjeta, tipoTarjeta: e.target.value })}
           required
         >
           <option value="">Seleccione tipo de tarjeta</option>
@@ -69,8 +69,8 @@ export default function MedioPago({ tarjetas, onAgregar, onActualizar, onElimina
       {tarjetas.map((tarjeta) => (
         <div key={tarjeta.id} className={styles.card}>
           <h3>Medio de Pago</h3>
-          <p>Número: {tarjeta.numero}</p>
-          <p>Tipo: {tarjeta.tipo}</p>
+          <p>Número: {tarjeta.numeroTarjeta}</p>
+          <p>Tipo: {tarjeta.tipoTarjeta}</p>
           <p>Vencimiento: {tarjeta.fechaVencimiento}</p>
           <div className={styles.cardActions}>
             <button onClick={() => handleEditar(tarjeta)}>Editar</button>

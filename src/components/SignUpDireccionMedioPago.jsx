@@ -87,7 +87,7 @@ function SignUpDireccionMedioPago() {
               >
                 Número
                 <input
-                  id="numero"
+                  id="numero_tarjeta"
                   className={`${styles.nombreC} ${styles.boxFade} ${styles.first}`}
                   type="text"
                   placeholder="Digite el número de si tarjeta"
@@ -100,7 +100,7 @@ function SignUpDireccionMedioPago() {
               >
                 Tipo de tarjeta:
                 <input
-                  id="nombre"
+                  id="tipo_tarjeta"
                   className={`${styles.apellidoC} ${styles.boxFade} ${styles.first}`}
                   type="text"
                   placeholder="Digite el tipo de tarjeta"
@@ -113,7 +113,7 @@ function SignUpDireccionMedioPago() {
               >
                 Fecha de vencimiento
                 <input
-                  id="fechaVencimiento"
+                  id="f_vencimiento"
                   className={`${styles.documentoC} ${styles.boxFade} ${styles.second}`}
                   type="text"
                   placeholder="Digite su fecha de vencimiento"
