@@ -34,5 +34,5 @@ export const cartUtils = {
   cleanText(text) {
     console.log("Texto limpio: ", text);
     return text ? text.replace(/^"(.+)"$/, '$1') : '';
-  }
+  },
 };

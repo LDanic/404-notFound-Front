@@ -1,23 +1,23 @@
 import styles from "../style/SignUp.module.css";
 import React, { useState } from "react";
-import {Link} from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function SignUp() {
-  const validarContraseña = (e) => {
-    e.preventDefault();
-    const password = document.getElementById("contra").value;
-    const confirmPassword = document.getElementById("validacion").value;
+  const navigate = useNavigate();
 
-    if (password !== confirmPassword) {
-      document.getElementById("mensaje_error").textContent =
-        "Las contraseñas no coinciden.";
-      return false;
-    }
-
-    document.getElementById("mensaje_error").textContent = "";
-    alert("Registro exitoso");
-    return true;
-  };
+  const [formData, setFormData] = useState({
+    nombre: "",
+    apellido: "",
+    tipoDocumento: "CC",
+    documento: "",
+    correo: "",
+    usuario: "",
+    contra: "",
+    validacion: "",
+    tipo: "cliente",
+    terminos: false,
+  });
 
   const [password, setPassword] = useState("");
   const [longitudValida, setLongitudValida] = useState(false);
@@ -27,19 +27,55 @@ function SignUp() {
   const handlePasswordChange = (e) => {
     const passwordValue = e.target.value;
     setPassword(passwordValue);
-
-    // Validar longitud mínima (8 caracteres)
     setLongitudValida(passwordValue.length >= 8);
-
-    // Validar si contiene al menos un número
     setTieneNumero(/\d/.test(passwordValue));
+    setFormData({ ...formData, contra: passwordValue });
   };
 
+  const handleChange = (e) => {
+    const { id, value, type, checked } = e.target;
+    setFormData({
+      ...formData,
+      [id]: type === "checkbox" ? checked : value,
+    });
+  };
+
+  const validarContraseña = (e) => {
+    e.preventDefault();
+    if (formData.contra !== formData.validacion) {
+      setMensajeError("Las contraseñas no coinciden.");
+      return false;
+    }
+    setMensajeError("");
+    handleRegister();
+  };
+
+  const handleRegister = async () => {
+    try {
+      const response = await axios.post("http://localhost:8080/registro", {
+        nombre: formData.nombre,
+        apellido: formData.apellido,
+        tipoDocumento: formData.tipoDocumento,
+        documento: formData.documento,
+        correo: formData.correo,
+        usuario: formData.usuario,
+        contrasena: formData.contra,
+        tipo: formData.tipo,
+      });
+
+      if (response.status === 201) {
+        alert("Registro exitoso");
+        navigate("/login");
+      }
+    } catch (error) {
+      alert("Error en el registro. Intente nuevamente.");
+    }
+  };
   return (
     <div>
       <section className={styles.contenido}>
         <div
-          className={`${styles.mosaico} ${styles["box-fade"]} ${styles.seventh}`}
+          className={`${styles.mosaico} ${styles["box-fade"]} ${styles.seventh} ${styles.boxFade} ${styles.first}`}
         ></div>
         <div className={styles.contenidoRegistro}>
           <div
@@ -47,96 +83,45 @@ function SignUp() {
             aria-labelledby="registro"
           >
             <form onSubmit={validarContraseña}>
-              <h1
-                id="registro"
-                className={`${styles.RegistroC} ${styles.titulo} ${styles.boxFade} ${styles.first}`}
-              >
+              <h1 id="registro" className={`${styles.RegistroC} ${styles.titulo}`}>
                 Registro de usuario
               </h1>
-              <label
-                className={`${styles.sub} ${styles.inicial} ${styles.boxFade} ${styles.first}`}
-                htmlFor="nombre"
-              >
+
+              <label className={`${styles.sub} ${styles.inicial} ${styles.boxFade} ${styles.first}`} htmlFor="nombre">
                 Nombre
-                <input
-                  id="nombre"
-                  className={`${styles.nombreC} ${styles.boxFade} ${styles.first}`}
-                  type="text"
-                  placeholder="Digite su nombre"
-                  required
-                />
+                <input id="nombre" className={`${styles.nombreC} ${styles.boxFade} ${styles.first}`} type="text" placeholder="Digite su nombre" required value={formData.nombre} onChange={handleChange} />
               </label>
-              <label
-                className={`${styles.sub} ${styles.boxFade} ${styles.first}`}
-                htmlFor="apellido"
-              >
+
+              <label className={`${styles.sub} ${styles.boxFade} ${styles.first}`} htmlFor="apellido">
                 Apellido
-                <input
-                  id="apellido"
-                  className={`${styles.apellidoC} ${styles.boxFade} ${styles.first}`}
-                  type="text"
-                  placeholder="Digite su apellido"
-                  required
-                />
+                <input id="apellido" className={`${styles.apellidoC} ${styles.boxFade} ${styles.first}`} type="text" placeholder="Digite su apellido" required value={formData.apellido} onChange={handleChange} />
               </label>
-              <label
-                className={`${styles.sub} ${styles.boxFade} ${styles.second}`}
-                htmlFor="tipoDocumento"
-              >
-                Tipo de documento de identidad
-                <select
-                  id="tipoDocumento"
-                  className={`${styles.tipoDocumentoC} ${styles.boxFade} ${styles.second}`}
-                  required
-                >
+
+              <label className={`${styles.sub} ${styles.boxFade} ${styles.second}`} htmlFor="tipoDocumento">
+                Tipo de documento
+                <select id="tipoDocumento" className={`${styles.tipoDocumentoC} ${styles.boxFade} ${styles.second}`} required value={formData.tipoDocumento} onChange={handleChange}>
                   <option value="CC">Cédula de ciudadanía</option>
                   <option value="TE">Tarjeta de extranjería</option>
                   <option value="PA">Pasaporte</option>
                 </select>
               </label>
-              <label
-                className={`${styles.sub} ${styles.boxFade} ${styles.second}`}
-                htmlFor="documento"
-              >
+
+              <label className={`${styles.sub} ${styles.boxFade} ${styles.second}`} htmlFor="documento">
                 Documento de identidad
-                <input
-                  id="documento"
-                  className={`${styles.documentoC} ${styles.boxFade} ${styles.second}`}
-                  type="text"
-                  placeholder="Digite su documento de identidad"
-                  required
-                />
+                <input id="documento" className={`${styles.documentoC} ${styles.boxFade} ${styles.second}`} type="text" placeholder="Digite su documento" required value={formData.documento} onChange={handleChange} />
               </label>
-              <label
-                className={`${styles.sub} ${styles.boxFade} ${styles.third}`}
-                htmlFor="correo"
-              >
+
+              <label className={`${styles.sub} ${styles.boxFade} ${styles.third}`} htmlFor="correo">
                 Correo
-                <input
-                  id="correo"
-                  className={`${styles.correoC} ${styles.boxFade} ${styles.third}`}
-                  type="email"
-                  placeholder="Digite su correo"
-                  required
-                />
+                <input id="correo" type="email" className={`${styles.correoC} ${styles.boxFade} ${styles.third}`}  placeholder="Digite su correo" required value={formData.correo} onChange={handleChange} />
               </label>
-              <label
-                className={`${styles.sub} ${styles.boxFade} ${styles.third}`}
-                htmlFor="usuario"
-              >
+
+              <label className={`${styles.sub} ${styles.boxFade} ${styles.third}`} htmlFor="usuario">
                 Usuario
-                <input
-                  id="usuario"
-                  className={`${styles.usuarioC} ${styles.boxFade} ${styles.third}`}
-                  type="text"
-                  placeholder="Digite su usuario"
-                  required
-                />
+                <input id="usuario"  className={`${styles.usuarioC} ${styles.boxFade} ${styles.third}`} type="text" placeholder="Digite su usuario" required value={formData.usuario} onChange={handleChange} />
               </label>
-              <label
-                className={`${styles.sub} ${styles.boxFade} ${styles.third}`}
-                htmlFor="contra"
-              >
+
+              <label className={`${styles.sub} ${styles.boxFade} ${styles.third}`} htmlFor="contra">
                 Contraseña
                 <input
                   id="contra"
@@ -148,74 +133,37 @@ function SignUp() {
                   required
                 />
               </label>
-              <ul
-                id="requisitos"
-                className={styles.requisitos}
-                style={{
-                  display: longitudValida && tieneNumero ? "none" : "block",
-                }}
-              >
-                <li
-                  id="longitud"
-                  className={longitudValida ? styles.cumplido : ""}
-                >
-                  Debe tener 8 o más caracteres
-                </li>
-                <li id="numero" className={tieneNumero ? styles.cumplido : ""}>
-                  Debe contener al menos un número
-                </li>
+
+              <ul className={styles.requisitos} style={{ display: longitudValida && tieneNumero ? "none" : "block" }}>
+                <li className={longitudValida ? styles.cumplido : ""}>Debe tener 8 o más caracteres</li>
+                <li className={tieneNumero ? styles.cumplido : ""}>Debe contener al menos un número</li>
               </ul>
-              <label
-                className={`${styles.sub} ${styles.boxFade} ${styles.fourth}`}
-                htmlFor="validacion"
-              >
+
+              <label className={`${styles.sub} ${styles.boxFade} ${styles.fourth}`} htmlFor="validacion">
                 Confirme su contraseña
-                <input
-                  id="validacion"
-                  className={`${styles.validacionC} ${styles.boxFade} ${styles.fourth}`}
-                  type="password"
-                  placeholder="Digite nuevamente su contraseña"
-                  required
-                />
+                <input id="validacion" className={`${styles.validacionC} ${styles.boxFade} ${styles.fourth}`} type="password" placeholder="Digite nuevamente su contraseña" required value={formData.validacion} onChange={handleChange} />
               </label>
-              <span id="mensaje_error" className={styles.error}></span>
+
+              <span className={styles.error}>{mensajeError}</span>
               <br />
-              <label
-                className={`${styles.sub} ${styles.boxFade} ${styles.fifth}`}
-                htmlFor="tipo"
-              >
+
+              <label className={`${styles.sub} ${styles.boxFade} ${styles.fifth}`} htmlFor="tipo">
                 ¿Qué quieres ser?
-                <select
-                  id="tipo"
-                  className={`${styles.tipoC} ${styles.boxFade} ${styles.fifth}`}
-                  required
-                >
+                <select id="tipo" className={`${styles.tipoC} ${styles.boxFade} ${styles.fifth}`} required value={formData.tipo} onChange={handleChange}>
                   <option value="cliente">Cliente</option>
                   <option value="artista">Artista</option>
                 </select>
               </label>
-              <label
-                className={`${styles.sub} ${styles.final} ${styles.boxFade} ${styles.sixth}`}
-                htmlFor="terminos"
-              >
-                <input
-                  id="terminos"
-                  className={`${styles.terminosC} ${styles.boxFade} ${styles.sixth}`}
-                  type="checkbox"
-                  required
-                />
-                Acepto las condiciones del servicio de 404 Not Found
+
+              <label className={`${styles.sub} ${styles.final} ${styles.boxFade} ${styles.sixth}`} htmlFor="terminos">
+                <input id="terminos" className={`${styles.terminosC} ${styles.boxFade} ${styles.sixth}`} type="checkbox" required checked={formData.terminos} onChange={handleChange} />
+                Acepto las condiciones del servicio
               </label>
-              <button
-                className={`${styles.registrar} ${styles.boxFade} ${styles.sixth}`}
-                type="submit"
-              >
-                Registrar
-              </button>
-              <h3
-                className={`${styles.sesion} ${styles.boxFade} ${styles.sixth}`}
-              >
-                ¿Ya tienes cuenta?  <Link to="/login" className={styles.a}>Inicia sesión</Link>
+
+              <button className={`${styles.registrar} ${styles.boxFade} ${styles.sixth}`} type="submit">Registrar</button>
+
+              <h3 className={`${styles.sesion} ${styles.boxFade} ${styles.sixth}`}>
+                ¿Ya tienes cuenta? <Link to="/login" className={styles.a}>Inicia sesión</Link>
               </h3>
             </form>
           </div>
