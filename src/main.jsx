@@ -19,6 +19,9 @@ import MiCuenta from "./components/MiCuenta.tsx";
 import Sign2 from "./components/SignUpDireccionMedioPago.jsx"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+localStorage.clear();
+
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Router>
