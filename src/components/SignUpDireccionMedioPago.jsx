@@ -1,8 +1,10 @@
 import styles from "../style/SignUp.module.css";
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function SignUpDireccionMedioPago() {
+   const navigate = useNavigate();
   const [direccion, setDireccion] = useState("");
   const [nombreDireccion, setNombreDireccion] = useState("");
   const [codigoPostal, setCodigoPostal] = useState("");
@@ -25,10 +27,20 @@ function SignUpDireccionMedioPago() {
     };
 
     try {
-      const response = await axios.post("http://localhost:8080/api/direccion-medio-pago", datos);
+      console.log(datos)
+      const response = await axios.get("http://localhost:8080/clientes/registerMedioDireccion", {params: {      
+        numeroTarjeta: datos.numeroTarjeta,
+        tipoTarjeta: datos.tipoTarjeta,
+        fechaVencimiento: datos.fechaVencimiento,
+        codigoPostal: datos.codigoPostal,
+        nombreDireccion: datos.nombreDireccion,
+        direccion: datos.direccion,
+        detalles: datos.detalles}});
       
-      if (response.status === 200) {
+      if (response.data === true) {
         alert("Datos guardados exitosamente");
+        alert("Gracias por registrarte, desde el equipo 404 Not Found te hemos otrogado un saldo de $500.000 para que compres lo que quieras!")
+        navigate("/")
       }
     } catch (error) {
       console.error("Error al registrar los datos:", error);
@@ -124,7 +136,7 @@ function SignUpDireccionMedioPago() {
               <label className={`${styles.sub} ${styles.boxFade} ${styles.second}`} htmlFor="fechaVencimiento">
                 Fecha de vencimiento
                 <input
-                  id="fechaVencimiento"
+                  id="f_vencimiento"
                   className={`${styles.documentoC} ${styles.boxFade} ${styles.second}`}
                   type="text"
                   placeholder="Digite su fecha de vencimiento"

@@ -11,12 +11,16 @@ import Cart from "./components/Cart";
 import SignUp from "./components/SignUp.jsx";
 import Checkout from "./components/Checkout";
 import OrderSuccess from "./components/OrderSuccess";
+import OrderFailure from "./components/OrderFailure";
 import Artista from "./components/ArtistView/page.tsx";
 import Esapcio from "./components/EspacioNavbar.tsx";
 import Footer from "./components/Footer.tsx";
 import MiCuenta from "./components/MiCuenta.tsx";
 import Sign2 from "./components/SignUpDireccionMedioPago.jsx"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+localStorage.clear();
+
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -32,6 +36,7 @@ createRoot(document.getElementById("root")).render(
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/order-success" element={<OrderSuccess />} />
+          <Route path="/order-failure" element={<OrderFailure />} />
           <Route path="/pagPrincipal" element={<PagPrincipal />} />
           <Route path="/signUp" element={<SignUp />} />
           <Route path="/sign2" element={<Sign2 />} />

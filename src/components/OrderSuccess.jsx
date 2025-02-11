@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { CheckCircle } from 'lucide-react';
 import style from "../style/OrderSuccess.module.css";
 
 function OrderSuccess() {
+  const navigate = useNavigate();
   const [order, setOrder] = useState(null);
 
   useEffect(() => {
@@ -12,6 +13,10 @@ function OrderSuccess() {
   }, []);
 
   if (!order) return null;
+
+  const endShoping = async () => {
+    navigate("/catalogo");
+  }
 
   return (
     <div className={style.orderSuccessPage}>
@@ -24,9 +29,9 @@ function OrderSuccess() {
           <h2>Resumen de la Compra</h2>
           <div className={style.customerInfo}>
             <h3>Información de Envío</h3>
-            <p>{order.customerInfo.name}</p>
-            <p>{order.customerInfo.email}</p>
-            <p>{order.customerInfo.address}</p>
+            <p>Nombre: {order.customerInfo.name}</p>
+            <p>Correo: {order.customerInfo.email}</p>
+            <p>Direccion: {order.customerInfo.address}</p>
           </div>
   
           <div className={style.itemsSummary}>
@@ -53,7 +58,7 @@ function OrderSuccess() {
   
         <div className={style.successActions}>
           <Link to="/catalogo">
-            <button className={style.continueShopping}>
+            <button className={style.continueShopping} onClick={endShoping}>
               Seguir Comprando
             </button>
           </Link>

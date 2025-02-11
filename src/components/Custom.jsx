@@ -1,12 +1,12 @@
 import { useEffect, useState, useRef } from 'react'
 import style from "../style/Custom.module.css";
 import Stamp_move from '/src/components/Stamp_move.jsx'
-import {useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import NavBar from "/src/components/NavBar.tsx";
 import { cartUtils } from '../utils/carUtils';
 import { useLocation } from "react-router-dom";
 import * as htmlToImage from "html-to-image";
-import { CheckCircle, Plus, Minus, Eye } from 'lucide-react';
+import { CheckCircle, Plus, Minus, Eye, Loader2, ShoppingCart, ShoppingBag } from 'lucide-react';
 
 const COLORS = [
   { name: 'white', label: 'White' },
@@ -29,13 +29,27 @@ function Custom() {
   const [selectedModel, setSelectedModel] = useState('R')
   const [shirtPrice, setShirtPrice] = useState(40000);
   const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [showToast, setShowToast] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [showLimits, setShowLimits] = useState(false);
-  
+
   const location = useLocation();
   const stamp = location.state;
-  const stampPrice = stamp.precio
+  const stampPrice = stamp.precio;
+  const cart = cartUtils.getCart();
+
+  const stockRestanteCal = () => {
+    var num = stamp.stock;
+    cart.forEach(item => {
+      if (item.stamp.id === stamp.id) {
+          num = num - item.quantity;
+      }
+  });
+    return num;
+  };
+
+  const stockRestante = stockRestanteCal();
 
   const previewRef = useRef();
 
@@ -43,35 +57,36 @@ function Custom() {
     setQuantity(prev => Math.max(1, prev + delta));
   };
 
-  const handleAddToCart = () => {
-    setShowLimits(false);
-    setTimeout(() => {
-      htmlToImage.toPng(previewRef.current, { useCORS: true }).then((dataUrl) => {
-        const newItem = {
-          selectedColor,
-          selectedModel,
-          selectedFabric,
-          selectedSize,
-          stamp,
-          shirtPrice: shirtPrice,
-          stampPrice: stampPrice,
-          position,
-          quantity,
-          previewImage: dataUrl,
-          name: `Camiseta personalizada - ${stamp.nombreEstampa}`,
-          total: shirtPrice + stampPrice
-        };
-  
-        cartUtils.addToCart(newItem);
-        setShowToast(true);
-        setTimeout(() => setShowToast(false), 3000);
-      });
+  const handleAddToCart = async () => {
+    setIsLoading(true);
+    const dataUrl = await htmlToImage.toPng(previewRef.current, { useCORS: true });
+    const newItem = {
+      selectedColor,
+      selectedModel,
+      selectedFabric,
+      selectedSize,
+      stamp,
+      shirtPrice: shirtPrice,
+      stampPrice: stampPrice,
+      position,
+      quantity,
+      previewImage: dataUrl,
+      name: `Camiseta personalizada - ${stamp.nombreEstampa}`,
+      total: shirtPrice + stampPrice
+    };
 
-    }, 1000);
+    cartUtils.addToCart(newItem);
+    setShowModal(true);
+    setTimeout(() => setIsLoading(false), 1000);
   };
 
   const handleChangeStamp = () => {
     navigate('/catalogo');
+  };
+
+  const handleNavigate = (path) => {
+    setShowModal(false);
+    navigate(path);
   };
 
   useEffect(() => {
@@ -88,21 +103,21 @@ function Custom() {
         {/* Left Column - T-shirt Preview */}
         <div className={style.previewPanel}>
           <div ref={previewRef}>
-            <Stamp_move 
+            <Stamp_move
               key={showLimits}
-              position={position} 
-              selectedModel={selectedModel} 
-              selectedColor={selectedColor} 
+              position={position}
+              selectedModel={selectedModel}
+              selectedColor={selectedColor}
               selectedImage={stamp.imagen}
               showLimits={showLimits}
             />
           </div>
-          <button 
-              className={`${style.viewLimitsBtn} ${showLimits ? style.active : ''}`}
-              onClick={() => setShowLimits(!showLimits)}
-            >
-              <Eye size={20} />
-              {showLimits ? 'Ocultar límites' : 'Ver límites'}
+          <button
+            className={`${style.viewLimitsBtn} ${showLimits ? style.active : ''}`}
+            onClick={() => setShowLimits(!showLimits)}
+          >
+            <Eye size={20} />
+            {showLimits ? 'Ocultar límites' : 'Ver límites'}
           </button>
         </div>
 
@@ -126,7 +141,7 @@ function Custom() {
 
             <div className={style.stampActions}>
               <div className={style.quantityControl}>
-                <button 
+                <button
                   onClick={() => handleQuantityChange(-1)}
                   className={style.quantityBtn}
                   disabled={quantity <= 1}
@@ -134,22 +149,35 @@ function Custom() {
                   <Minus size={16} />
                 </button>
                 <span className={style.quantityDisplay}>{quantity}</span>
-                <button 
+                <button
                   onClick={() => handleQuantityChange(1)}
                   className={style.quantityBtn}
-                  disabled={quantity == stamp.stock}
+                  disabled={quantity == stockRestante | stockRestante == 0}
                 >
                   <Plus size={16} />
                 </button>
               </div>
               <button className={`${style.btn} ${style.btnChange}`} onClick={handleChangeStamp}>
-                CAMBIAR ESTAMPA     
+                CAMBIAR ESTAMPA
               </button>
-              <button className={`${style.btn} ${style.btnCart}`} onClick={handleAddToCart}>
-                AÑADIR AL CARRITO
-                <svg className={style.cartIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                </svg>
+              <button
+                className={`${style.btn} ${showLimits | stockRestante == 0 ? style.btnCartDisabled : style.btnCart}`}
+                onClick={handleAddToCart}
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 className={style.loadingIcon} size={24} />
+                    AGREGANDO...
+                  </>
+                ) : (
+                  <>
+                    AÑADIR AL CARRITO
+                    <svg className={style.cartIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    </svg>
+                  </>
+                )}
               </button>
             </div>
           </div>
@@ -225,11 +253,34 @@ function Custom() {
         </div>
       </div>
 
-      {/* Toast Notification */}
-      <div className={`${style.toast} ${showToast ? style.show : ''}`}>
-        <CheckCircle className={style.toastIcon} size={20} />
-        <span>¡Producto añadido al carrito!</span>
-      </div>
+      {/* Success Modal */}
+      {showModal && (
+        <div className={style.modalOverlay}>
+          <div className={style.modal}>
+            <div className={style.modalIcon}>
+              <CheckCircle size={48} className={style.successIcon} />
+            </div>
+            <h2>¡Producto añadido al carrito!</h2>
+            <p>¿Qué te gustaría hacer ahora?</p>
+            <div className={style.modalActions}>
+              <button
+                className={style.modalButton}
+                onClick={() => handleNavigate('/cart')}
+              >
+                <ShoppingCart size={20} />
+                Ir al Carrito
+              </button>
+              <button
+                className={`${style.modalButton} ${style.secondary}`}
+                onClick={() => handleNavigate('/catalogo')}
+              >
+                <ShoppingBag size={20} />
+                Seguir Comprando
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
