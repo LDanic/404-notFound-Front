@@ -39,7 +39,7 @@ function SignUpDireccionMedioPago() {
       
       if (response.data === true) {
         alert("Datos guardados exitosamente");
-        alert("Gracias por registrarte, desde el equipo 404 Not Found te hemos otrogado un saldo de $150.000 para que compres lo que quieras!")
+        alert("Gracias por registrarte, desde el equipo 404 Not Found te hemos otrogado un saldo de $500.000 para que compres lo que quieras!")
         navigate("/")
       }
     } catch (error) {
