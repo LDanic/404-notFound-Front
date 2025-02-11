@@ -105,7 +105,6 @@ function CatalogoEstampa({}: Props) {
         try {
             const response = await axios.get<Camisa[]>('http://localhost:8080/catalogo');
             setCatalogo(response.data);
-            console.log(camisas)
         } catch (err) {
             setError('Error al cargar el catálogo');
             console.error('Error:', err);

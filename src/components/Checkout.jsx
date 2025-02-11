@@ -136,7 +136,6 @@ function Checkout() {
       // Verificar si la respuesta contiene "exitosamente"
       if (textResponse.includes("exitosamente")) {
         console.log('Orden creada con éxito:', textResponse);
-        alert('FELICIDADES, TUS CAMISETAS ESTARÁN EN CAMINO MUY PRONTO.');
 
         const orderSummary = {
           items: cart,
