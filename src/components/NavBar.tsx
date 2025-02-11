@@ -8,12 +8,12 @@ function NavBar({}: Props) {
   const navigate = useNavigate();
 
   const handleAccount = () => {
-    if(localStorage.getItem('idCliente')){
-      navigate('/miCuenta');
-    }else{
-      navigate('/login');
+    if (localStorage.getItem("idCliente")) {
+      navigate("/miCuenta");
+    } else {
+      navigate("/login");
     }
-  }
+  };
 
   return (
     <div className={style.navb}>
@@ -22,7 +22,7 @@ function NavBar({}: Props) {
           <h3>Catalogo</h3> <p>+1000 estampas</p>
         </Link>
         <div className={style.linea}></div>
-        <Link to="/artista" className={style.artistas}>
+        <Link to="/" className={style.catalogo}>
           <h3>Artistas</h3> <p>+100 artistas</p>
         </Link>
       </div>
@@ -34,12 +34,14 @@ function NavBar({}: Props) {
       <div className={style.icons}>
         <i className={`${style.bi} ${["bi-bag-heart-fill"]}`}></i>
         <div className={style.linea}></div>
-        <i className={`${style.bi} ${["bi-person-fill"]}`} onClick={handleAccount}></i>
+        <i
+          className={`${style.bi} ${["bi-person-fill"]}`}
+          onClick={handleAccount}
+        ></i>
         <div className={style.linea}></div>
         <Link to="/cart" className={style.bi}>
-        <i className={`${style.bi} ${["bi-cart-fill"]}`}></i>
+          <i className={`${style.bi} ${["bi-cart-fill"]}`}></i>
         </Link>
-        
       </div>
     </div>
   );
