@@ -1,23 +1,105 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cartUtils } from '../utils/carUtils';
+import DireccionEnvio from "./DireccionEnvio";
+import MedioPago from "./MedioPago";
+import styles from "../style/MiCuenta.module.css";
+
 import style from "../style/Checkout.module.css";
 
+
+
+
 function Checkout() {
+  const Direccion = {
+    codigo_postal: 1,
+    nombre_direccion: "calle 1",
+    direccion: "asdada",
+    detalles_direccion: "string"
+  };
+
+  const Tarjeta = {
+    id: 12,
+    numeroTarjeta: "123456789",
+    tipoTarjeta: "Visa",
+    fechaVencimiento: "12-05-25"
+  };
+  
+  const Usuario = {
+    nombre: "pedrito",
+    numeroId: 147852,
+    apellido: "Perecita",
+    tipoId: "ti",
+    correo: "juanio@c.com"
+  }
+  
+
   const navigate = useNavigate();
+  const [tarjetas, setTarjetas] = useState([])
   const cart = cartUtils.getCart();
   const total = cart.reduce((sum, item) => sum + ((item.shirtPrice+item.stampPrice) * item.quantity), 0);
+  const [direccion, setDireccion] = useState(Direccion)
+  const [usuario, setUsuario] = useState(Usuario);
+  const [pago, setPago] = useState(null);
+ 
+  useEffect(() => {
+    fetch("http://localhost:8080/clientes/direcciones")
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("No se encontró dirección");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log("Dirección recibida:", data);
+        setDireccion(data);
+      })
+      .catch((error) => {
+        console.error("Error al obtener datos:", error);
+        setError(error.message);
+      });
+  }, []);
 
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    address: '',
-    city: '',
-    zipCode: '',
-    cardNumber: '',
-    expiryDate: '',
-    cvv: ''
-  });
+  useEffect(() => {
+    fetch("http://localhost:8080/clientes/mediosPago")
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("No se encontró dirección");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log("Dirección recibida:", data);
+        setTarjetas(data);
+        console.log(data)
+        const primerPagoId = data[0].id; // Acceder al ID del primer elemento
+        setPago(primerPagoId);
+      })
+      .catch((error) => {
+        console.error("Error al obtener datos:", error);
+        setError(error.message);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/clientes/infoCliente")
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("No se encontró cliente");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log("Dirección recibida:", data);
+        setUsuario(data);
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error("Error al obtener datos:", error);
+        setError(error.message);
+      });
+  }, []);
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -30,17 +112,24 @@ function Checkout() {
   const handleCheckout = async () => {  
     // Fetch the cart data (assuming it's stored in localStorage)
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
-  
+    console.log('pago: ',pago);
     try {
       // Send the cart data to the backend
-      const response = await fetch('http://localhost:8080/clientes/comprarPedido', {
-        method: 'POST',
+      const dataToSend = {
+        cart: cart, // Lista de productos en el carrito
+        pago: pago, // ID de la tarjeta seleccionada
+      };
+      console.log(dataToSend)
+    
+      // Enviar la solicitud al backend
+      const response = await fetch("http://localhost:8080/clientes/comprarPedido", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(cart), // Send the cart data as JSON
+        body: JSON.stringify(dataToSend), // Enviar datos como JSON
       });
-  
+
       // Leer la respuesta como texto
       const textResponse = await response.text();
 
@@ -53,9 +142,9 @@ function Checkout() {
           items: cart,
           total,
           customerInfo: {
-            name: formData.name,
-            email: formData.email,
-            address: formData.address
+            name: usuario.nombre +" "+ usuario.apellido,
+            email: usuario.correo,
+            address: direccion.direccion + " " + direccion.detalles_direccion
           },
           orderId: Math.random().toString(36).substr(2, 9)
         };
@@ -99,92 +188,22 @@ function Checkout() {
             <span>${total.toFixed(0)}</span>
           </div>
         </div>
-  
-        <form className={style.checkoutForm}>
-          <h2>Información de Envío</h2>
-          <div className={style.formGroup}>
-            <input
-              type="text"
-              name="name"
-              placeholder="Nombre completo"
-              value={formData.name}
-              onChange={handleInputChange}
-              required
+        <div className={styles.tabs}>
+        <div className={styles.tabList}>
+        </div>
+        <div className={styles.tabContent}>
+        <DireccionEnvio
+              direccion={direccion}
             />
-          </div>
-          <div className={style.formGroup}>
-            <input
-              type="email"
-              name="email"
-              placeholder="Correo electrónico"
-              value={formData.email}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          <div className={style.formGroup}>
-            <input
-              type="text"
-              name="address"
-              placeholder="Dirección de envío"
-              value={formData.address}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          <div className={style.formRow}>
-            <input
-              type="text"
-              name="city"
-              placeholder="Ciudad"
-              value={formData.city}
-              onChange={handleInputChange}
-              required
-            />
-            <input
-              type="text"
-              name="zipCode"
-              placeholder="Código Postal"
-              value={formData.zipCode}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-  
-          <h2>Información de Pago</h2>
-          <div className={style.formGroup}>
-            <input
-              type="text"
-              name="cardNumber"
-              placeholder="Número de tarjeta"
-              value={formData.cardNumber}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          <div className={style.formRow}>
-            <input
-              type="text"
-              name="expiryDate"
-              placeholder="MM/AA"
-              value={formData.expiryDate}
-              onChange={handleInputChange}
-              required
-            />
-            <input
-              type="text"
-              name="cvv"
-              placeholder="CVV"
-              value={formData.cvv}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-  
-          <button type="submit" className={style.submitButton} onClick={handleCheckout}>
+       <MedioPago
+                    tarjetas={tarjetas}
+
+                  />
+        </div>
+      </div>
+        <button className={style.submitButton} onClick={handleCheckout}>
             Confirmar Pedido
           </button>
-        </form>
       </div>
     </div>
   );
