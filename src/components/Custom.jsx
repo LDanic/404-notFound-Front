@@ -36,7 +36,20 @@ function Custom() {
 
   const location = useLocation();
   const stamp = location.state;
-  const stampPrice = stamp.precio
+  const stampPrice = stamp.precio;
+  const cart = cartUtils.getCart();
+
+  const stockRestanteCal = () => {
+    var num = stamp.stock;
+    cart.forEach(item => {
+      if (item.stamp.id === stamp.id) {
+          num = num - item.quantity;
+      }
+  });
+    return num;
+  };
+
+  const stockRestante = stockRestanteCal();
 
   const previewRef = useRef();
 
@@ -139,7 +152,7 @@ function Custom() {
                 <button
                   onClick={() => handleQuantityChange(1)}
                   className={style.quantityBtn}
-                  disabled={quantity == stamp.stock}
+                  disabled={quantity == stockRestante | stockRestante == 0}
                 >
                   <Plus size={16} />
                 </button>
@@ -148,7 +161,7 @@ function Custom() {
                 CAMBIAR ESTAMPA
               </button>
               <button
-                className={`${style.btn} ${showLimits ? style.btnCartDisabled : style.btnCart}`}
+                className={`${style.btn} ${showLimits | stockRestante == 0 ? style.btnCartDisabled : style.btnCart}`}
                 onClick={handleAddToCart}
                 disabled={isLoading}
               >
