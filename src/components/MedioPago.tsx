@@ -16,7 +16,7 @@ interface MedioPagoProps {
   onEliminar: (id: number) => void
 }
 
-export default function MedioPago({ tarjetas, onAgregar, onActualizar, onEliminar, oculto}: MedioPagoProps & {oculto: boolean}) {
+export default function MedioPago({ tarjetas, onAgregar, onActualizar, onEliminar, oculto }: MedioPagoProps & { oculto: boolean }) {
   const [nuevaTarjeta, setNuevaTarjeta] = useState({ numeroTarjeta: "", tipoTarjeta: "", fechaVencimiento: "" })
   const [editando, setEditando] = useState<number | null>(null)
 
@@ -40,10 +40,10 @@ export default function MedioPago({ tarjetas, onAgregar, onActualizar, onElimina
 
   return (
     <div>
-      <form 
-        onSubmit={handleSubmit} 
+      <form
+        onSubmit={handleSubmit}
         className={styles.form}
-        style={{ display: oculto ? "none" : "block" }}>
+        style={{ display: oculto ? "none" : "flex" }}>
         <input
           type="text"
           placeholder="Número de Tarjeta"
@@ -78,11 +78,11 @@ export default function MedioPago({ tarjetas, onAgregar, onActualizar, onElimina
           <p>Tipo: {tarjeta.tipoTarjeta}</p>
           <p>Vencimiento: {tarjeta.fechaVencimiento}</p>
           <div className={styles.cardActions}>
-            <button 
+            <button
               onClick={() => handleEditar(tarjeta)}
               style={{ display: oculto ? "none" : "block" }}
             >Editar</button>
-            <button 
+            <button
               onClick={() => onEliminar(tarjeta.id)}
               style={{ display: oculto ? "none" : "block" }}
             >Eliminar</button>
