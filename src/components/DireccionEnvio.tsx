@@ -14,7 +14,7 @@ interface DireccionEnvioProps {
   onActualizar: (direccion: Direccion) => void
 }
 
-export default function DireccionEnvio({ direccion, onActualizar }: DireccionEnvioProps) {
+export default function DireccionEnvio({ direccion, onActualizar, oculto }: DireccionEnvioProps & {oculto: boolean}) {
   const [editando, setEditando] = useState(false)
   const [direccionEditada, setDireccionEditada] = useState(direccion)
 
@@ -41,7 +41,10 @@ export default function DireccionEnvio({ direccion, onActualizar }: DireccionEnv
           <strong>Código Postal:</strong> {direccion.codigo_postal}
         </p>
         <div className={styles.cardActions}>
-          <button onClick={() => setEditando(true)}>Editar</button>
+          <button 
+            onClick={() => setEditando(true)}
+            style={{ display: oculto ? "none" : "block" }}
+            >Editar</button>
         </div>
       </div>
     )

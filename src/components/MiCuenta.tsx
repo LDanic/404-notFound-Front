@@ -138,6 +138,7 @@ export default function MiCuenta() {
             <DireccionEnvio
               direccion={direccion}
               onActualizar={actualizarDireccion}
+              oculto = {false}
             />
           )}
           {activeTab === "pagos" && (
@@ -146,6 +147,7 @@ export default function MiCuenta() {
               onAgregar={agregarTarjeta}
               onActualizar={actualizarTarjeta}
               onEliminar={eliminarTarjeta}
+              oculto={false}
             />
           )}
         </div>

@@ -29,9 +29,9 @@ function OrderSuccess() {
           <h2>Resumen de la Compra</h2>
           <div className={style.customerInfo}>
             <h3>Información de Envío</h3>
-            <p>{order.customerInfo.name}</p>
-            <p>{order.customerInfo.email}</p>
-            <p>{order.customerInfo.address}</p>
+            <p>Nombre: {order.customerInfo.name}</p>
+            <p>Correo: {order.customerInfo.email}</p>
+            <p>Direccion: {order.customerInfo.address}</p>
           </div>
   
           <div className={style.itemsSummary}>

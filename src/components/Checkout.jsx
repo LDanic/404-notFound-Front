@@ -24,7 +24,7 @@ function Checkout() {
     tipoTarjeta: "Visa",
     fechaVencimiento: "12-05-25"
   };
-  
+
   const Usuario = {
     nombre: "pedrito",
     numeroId: 147852,
@@ -32,16 +32,16 @@ function Checkout() {
     tipoId: "ti",
     correo: "juanio@c.com"
   }
-  
+
 
   const navigate = useNavigate();
   const [tarjetas, setTarjetas] = useState([])
   const cart = cartUtils.getCart();
-  const total = cart.reduce((sum, item) => sum + ((item.shirtPrice+item.stampPrice) * item.quantity), 0);
+  const total = cart.reduce((sum, item) => sum + ((item.shirtPrice + item.stampPrice) * item.quantity), 0);
   const [direccion, setDireccion] = useState(Direccion)
   const [usuario, setUsuario] = useState(Usuario);
   const [pago, setPago] = useState(null);
- 
+
   useEffect(() => {
     fetch("http://localhost:8080/clientes/direcciones")
       .then((res) => {
@@ -109,10 +109,10 @@ function Checkout() {
     }));
   };
 
-  const handleCheckout = async () => {  
+  const handleCheckout = async () => {
     // Fetch the cart data (assuming it's stored in localStorage)
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    console.log('pago: ',pago);
+    console.log('pago: ', pago);
     try {
       // Send the cart data to the backend
       const dataToSend = {
@@ -120,7 +120,7 @@ function Checkout() {
         pago: pago, // ID de la tarjeta seleccionada
       };
       console.log(dataToSend)
-    
+
       // Enviar la solicitud al backend
       const response = await fetch("http://localhost:8080/clientes/comprarPedido", {
         method: "POST",
@@ -142,7 +142,7 @@ function Checkout() {
           items: cart,
           total,
           customerInfo: {
-            name: usuario.nombre +" "+ usuario.apellido,
+            name: usuario.nombre + " " + usuario.apellido,
             email: usuario.correo,
             address: direccion.direccion + " " + direccion.detalles_direccion
           },
@@ -154,8 +154,9 @@ function Checkout() {
         localStorage.removeItem('cart');
 
       } else {
-        console.log('Error durante el pago:', textResponse);
-        alert('Error durante el pago:', textResponse);
+        localStorage.setItem('error', textResponse);
+        console.log(textResponse);
+        navigate('/order-failure');
       }
     } catch (error) {
       alert('Network error. Please check your connection.');
@@ -178,7 +179,7 @@ function Checkout() {
                   <p>Talla: {item.selectedSize || 'M'}</p>
                   <p>Tela: {item.selectedFabric || 'Lana'}</p>
                   <p>Cantidad: {item.quantity}</p>
-                  <p className={style.itemPrice}>${((item.shirtPrice+item.stampPrice) * item.quantity).toFixed(0)}</p>
+                  <p className={style.itemPrice}>${((item.shirtPrice + item.stampPrice) * item.quantity).toFixed(0)}</p>
                 </div>
               </div>
             ))}
@@ -189,25 +190,35 @@ function Checkout() {
           </div>
         </div>
         <div className={styles.tabs}>
-        <div className={styles.tabList}>
-        </div>
-        <div className={styles.tabContent}>
-        <DireccionEnvio
-              direccion={direccion}
-            />
-       <MedioPago
-                    tarjetas={tarjetas}
+          <div className={styles.card}>
+            <h3>Informacion Cliente</h3>
+            <p>
+              <strong>Nombre:</strong> {usuario.nombre}
+            </p>
+            <p>
+              <strong>Apellido:</strong> {usuario.apellido}
+            </p>
+            <p>
+              <strong>Correo electronico:</strong> {usuario.correo}
+            </p>
+          </div>
+          <DireccionEnvio
+            direccion={direccion}
+            oculto={true}
+          />
+          <MedioPago
+            tarjetas={tarjetas}
+            oculto={true}
 
-                  />
+          />
         </div>
-      </div>
         <button className={style.submitButton} onClick={handleCheckout}>
-            Confirmar Pedido
-          </button>
+          Confirmar Pedido
+        </button>
       </div>
     </div>
   );
-  
+
 }
 
 export default Checkout;
