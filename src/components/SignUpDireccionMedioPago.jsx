@@ -94,7 +94,7 @@ function SignUpDireccionMedioPago() {
                 />
               </label>
 
-              <h1 id="registro" className={`${styles.RegistroC} ${styles.titulo} ${styles.boxFade} ${styles.first}`}>
+              <h1 id="registro" className={`${styles.RegistroC} ${styles.titulo} ${styles.boxFade} ${styles.first} ${styles.medioPago}`}>
                 Medio de pago
               </h1>
               <label className={`${styles.sub} ${styles.inicial} ${styles.boxFade} ${styles.first}`} htmlFor="numeroTarjeta">
