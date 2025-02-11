@@ -1,6 +1,9 @@
 import { useState } from "react"
 import { Upload, HelpCircle, X, AlertCircle } from "lucide-react"
 import styles from "../../style/UploadDesign.module.css"
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+
 
 interface DesignData {
   name: string
@@ -15,6 +18,7 @@ interface UploadDesignProps {
 }
 
 export default function UploadDesign({ onUpload }: UploadDesignProps) {
+  const navigate = useNavigate();
   const [designData, setDesignData] = useState<DesignData>({
     name: "",
     description: "",
@@ -47,7 +51,7 @@ export default function UploadDesign({ onUpload }: UploadDesignProps) {
     }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     if (!validateGithubUrl(designData.imageUrl)) {
@@ -61,6 +65,23 @@ export default function UploadDesign({ onUpload }: UploadDesignProps) {
       setShowErrorModal(true)
       return
     }
+
+    console.log(designData)
+      const response = await axios.get("http://localhost:8080/artista/uploadEstampa", {params: {      
+        nombreEstampa: designData.name,
+        descripcionEstampa: designData.description,
+        nombreTema: designData.theme,
+        precioEstampa: designData.price,
+        enlaceImagen: designData.imageUrl}});
+      
+      if (response.data === true) {
+        alert("Su estampa ha sido agregada al catalogo");
+        navigate("/artista")
+      }
+      else{
+        
+         alert(" no se pudo subir :(")   
+      }
 
     onUpload(designData)
     setDesignData({
